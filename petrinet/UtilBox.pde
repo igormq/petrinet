@@ -66,7 +66,8 @@ class UtilBox {
       mouseY >= y  &&  mouseY <= y+h) { 
       mouseInsideTB=true;
       if (mouseClicked) {       
-        (manager.transitions).add(new Transition(w,h,"T"+(manager.transitions).size()));
+        (manager.transitions).add(new Transition(w,h,str(manager.numberOfTransitionsCreated)));
+        manager.numberOfTransitionsCreated++;
          manager.transitionCreated=true;
         mouseClicked=false;
       }
@@ -87,7 +88,8 @@ class UtilBox {
     if ( (dist(mouseX, mouseY, x, y))<=radius) { 
       mouseInsidePB=true;
       if (mouseClicked) {       
-        (manager.places).add(new Place(bColor,"S"+(manager.places).size()));
+        (manager.places).add(new Place(bColor,str(manager.numberOfPlacesCreated)));
+        manager.numberOfPlacesCreated++;
         manager.placeCreated=true;
         mouseClicked=false;
       }

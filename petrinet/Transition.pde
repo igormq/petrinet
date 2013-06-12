@@ -3,8 +3,9 @@ class Transition {
   PVector pos;
   Boolean mouseInside=false;
   Boolean mouseDragged;
-  
+
   String id;
+  int index;
 
   float w, h;
 
@@ -38,6 +39,7 @@ class Transition {
     this.mouseDragged=mouseDragged;
     strokeWeight(6);
     if (mouseDragged && mouseInside) {
+      manager.transitionDragged=(Transition)(manager.transitions).get(index);
       PVector mouseMov = new PVector(mouseX-pmouseX, mouseY-pmouseY);
       pos.x+=mouseMov.x;
       pos.y+=mouseMov.y;
@@ -48,7 +50,7 @@ class Transition {
     textSize(15);
     fill(0);
     textAlign(CENTER);
-    text(id, pos.x-15, pos.y+7);
+    text("T"+id, pos.x-15, pos.y+7);
   }
 }    
 

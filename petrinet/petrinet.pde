@@ -63,6 +63,8 @@ void mouseReleased(){
   (manager.utilBox).mouseDragged=false;
   (manager.utilBox).moveOn=false;
   manager.mouseDragged=false;
+  manager.placeDragged=null;
+  manager.transitionDragged=null;
 }
 
 
