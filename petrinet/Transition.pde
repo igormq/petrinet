@@ -1,0 +1,13 @@
+class Transition{
+  
+  
+  Transition(){
+  }
+  
+  
+  
+  
+  
+  
+  
+}
