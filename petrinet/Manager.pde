@@ -22,7 +22,6 @@ class Manager{
   //Prints Logo
   image(logo,4,6);
   utilBox.draw();
-  //println(transitions.size());
       
  }
   

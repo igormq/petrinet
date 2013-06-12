@@ -1,5 +1,7 @@
-class Places{
+class Place{
   
-  
+  Place(color pColor){
+    
+  }
   
 }    

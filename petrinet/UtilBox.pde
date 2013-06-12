@@ -64,20 +64,17 @@ class UtilBox {
     // if mouse is inside rectangle
     if ( mouseX >= x  &&  mouseX <= x+w &&
       mouseY >= y  &&  mouseY <= y+h) { 
-        mouseInsideTB=true;
+      mouseInsideTB=true;
 
       if (mouseClicked) {       
-         println("foi");       
         (manager.transitions).add(new Transition());
         mouseClicked=false;
       }
       else {
         fill(255, 255, 0); // the color if the mouse is over the button
       }
-
     } 
-    else{
-      mouseInsideTB=false;
+    else {
       fill(0, 0, 0, 245);     // the color if the mouse is not over the button
     }
     rect(x, y, w, h);
@@ -88,10 +85,12 @@ class UtilBox {
   {
     // if mouse is inside ellipse
     if ( (dist(mouseX, mouseY, x, y))<=radius) { 
-
-      if (mousePressed) {              
-        fill(bColor);   // the color if the mouse is pressed and over the button
+      mouseInsidePB=true;
+      if (mouseClicked) {       
+        (manager.places).add(new Place(bColor));
+        mouseClicked=false;
       }
+
       else {
         fill(bColor); // the color if the mouse is over the button
       }
@@ -158,7 +157,6 @@ class UtilBox {
     box(boxOn);
     //Draws boxBar
     mouseInsideBoxBar=boxBar(boxX, boxY, 200, 30);
-    
   }
 }
 
