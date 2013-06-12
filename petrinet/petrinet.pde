@@ -37,12 +37,23 @@ manager.draw();
 void mouseClicked(){
  if(manager.utilBox.mouseInsideBoxBar) (manager.utilBox).mouseClicked= true; 
  if(manager.utilBox.mouseInsideTB) (manager.utilBox).mouseClicked= true; 
- if(manager.utilBox.mouseInsidePB) (manager.utilBox).mouseClicked= true; 
+ if(manager.utilBox.mouseInsidePB) (manager.utilBox).mouseClicked= true;
+ 
+ if(manager.placeCreated) {
+   manager.placeCreated=false;
+   manager.mouseClicked=false;
+ } 
+ 
+ if(manager.transitionCreated) {
+   manager.transitionCreated=false;
+   manager.mouseClicked=false;
+ } 
   
 }
 
 void mouseDragged(){
  (manager.utilBox).mouseDragged=true; 
+ manager.mouseDragged=true;
   
   
 }
@@ -51,6 +62,7 @@ void mouseDragged(){
 void mouseReleased(){
   (manager.utilBox).mouseDragged=false;
   (manager.utilBox).moveOn=false;
+  manager.mouseDragged=false;
 }
 
 

@@ -65,9 +65,9 @@ class UtilBox {
     if ( mouseX >= x  &&  mouseX <= x+w &&
       mouseY >= y  &&  mouseY <= y+h) { 
       mouseInsideTB=true;
-
       if (mouseClicked) {       
-        (manager.transitions).add(new Transition());
+        (manager.transitions).add(new Transition(w,h,"T"+(manager.transitions).size()));
+         manager.transitionCreated=true;
         mouseClicked=false;
       }
       else {
@@ -87,7 +87,8 @@ class UtilBox {
     if ( (dist(mouseX, mouseY, x, y))<=radius) { 
       mouseInsidePB=true;
       if (mouseClicked) {       
-        (manager.places).add(new Place(bColor));
+        (manager.places).add(new Place(bColor,"S"+(manager.places).size()));
+        manager.placeCreated=true;
         mouseClicked=false;
       }
 
@@ -105,8 +106,11 @@ class UtilBox {
   //MENU box
   void box(Boolean boxOn) {
     if (boxOn) {
+      mouseInsideTB = false;
+      mouseInsidePB = false;
       strokeWeight(5);
       textSize(23);
+      textAlign(LEFT);
 
 
       fill(97, 97, 97, 100);
@@ -138,6 +142,8 @@ class UtilBox {
       rect(boxX, boxY+300, 200, 30);
       fill(255);
       text("Informations", boxX+35, boxY+323);
+      
+
     }
   }
 
@@ -155,6 +161,7 @@ class UtilBox {
     moveBox(moveOn);
     smooth();
     box(boxOn);
+    
     //Draws boxBar
     mouseInsideBoxBar=boxBar(boxX, boxY, 200, 30);
   }
