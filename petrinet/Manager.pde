@@ -4,6 +4,9 @@ class Manager{
   PImage logo = loadImage("petrinet.png");
   UtilBox utilBox=new UtilBox();
   
+  ArrayList places= new ArrayList();
+  ArrayList arcs= new ArrayList();
+  ArrayList transitions= new ArrayList();
   
  //Constructor
  Manager(PImage bg, UtilBox utilBox){
@@ -19,6 +22,7 @@ class Manager{
   //Prints Logo
   image(logo,4,6);
   utilBox.draw();
+  //println(transitions.size());
       
  }
   

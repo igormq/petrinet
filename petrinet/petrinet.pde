@@ -36,6 +36,8 @@ manager.draw();
 
 void mouseClicked(){
  if(manager.utilBox.mouseInsideBoxBar) (manager.utilBox).mouseClicked= true; 
+ if(manager.utilBox.mouseInsideTB) (manager.utilBox).mouseClicked= true; 
+ if(manager.utilBox.mouseInsidePB) (manager.utilBox).mouseClicked= true; 
   
 }
 
