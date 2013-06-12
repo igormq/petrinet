@@ -22,11 +22,19 @@ manager = new Manager(bg, new UtilBox());
 
 void draw(){
 
+ 
 
 manager.draw();
+ 
+ smooth();
 
 
 
 
 
+}
+
+void mouseClicked(){
+ (manager.utilBox).mouseClicked= true; 
+  
 }

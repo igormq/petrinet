@@ -2,7 +2,7 @@ class Manager{
   
   PImage bg;
   PImage logo = loadImage("petrinet.png");
-  UtilBox utilBox;
+  UtilBox utilBox=new UtilBox();
   
   
  //Constructor
@@ -18,6 +18,7 @@ class Manager{
   background(bg); 
   //Prints Logo
   image(logo,4,6);
+  utilBox.draw();
       
  }
   

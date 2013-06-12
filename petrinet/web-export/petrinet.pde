@@ -9,7 +9,7 @@ PImage bg = loadImage("bg.png");
 
 
 //Constructing the Manager
-manager = new Manager();
+manager = new Manager(bg, new UtilBox());
 
 
   
@@ -51,22 +51,24 @@ class Arcs{
 class Manager{
   
   PImage bg;
-  
+  PImage logo = loadImage("petrinet.png");
+  UtilBox utilBox;
   
   
  //Constructor
- Manager(){
-     PImage bg = loadImage("bg.png");
-
+ Manager(PImage bg, UtilBox utilBox){
+  this.utilBox=utilBox;
   this.bg=bg; 
    
  }
+ 
+ 
+ 
  void draw(){
-if(bg!=null)  line(0,0,500,500);
-image(bg,400,400);
   background(bg); 
-   
-   
+  //Prints Logo
+  image(logo,4,6);
+      
  }
   
   
@@ -87,6 +89,9 @@ class Transitions{
 }
 class UtilBox{
   
+  ArrayList places= new ArrayList();
+  ArrayList arcs= new ArrayList();
+  ArrayList transitions= new ArrayList();
   
   
   
