@@ -35,6 +35,21 @@ manager.draw();
 }
 
 void mouseClicked(){
- (manager.utilBox).mouseClicked= true; 
+ if(manager.utilBox.mouseInsideBoxBar) (manager.utilBox).mouseClicked= true; 
   
 }
+
+void mouseDragged(){
+ (manager.utilBox).mouseDragged=true; 
+  
+  
+}
+
+
+void mouseReleased(){
+  (manager.utilBox).mouseDragged=false;
+  (manager.utilBox).moveOn=false;
+}
+
+
+
