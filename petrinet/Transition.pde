@@ -24,12 +24,17 @@ class Transition {
     // if mouse is inside rect
     if ( mouseX >= x  &&  mouseX <= x+w && mouseY >= y  &&  mouseY <= y+h) { 
       if (!mouseDragged)   mouseInside=true;
+      if(!manager.transitionCreated)  manager.mouseInsideTransition=(Transition)manager.transitions.get(index);
+
 
       fill(255, 255, 0); // the color if the mouse is over the button
     } 
     else {
-      if (!mouseDragged) mouseInside=false;
-      fill(0, 0, 0, 245);     // the color if the mouse is not over the button
+      if ((!mouseDragged)&&mouseInside){
+        mouseInside=false;
+      manager.mouseInsideTransition=null;
+      
+      }fill(0, 0, 0, 255);     // the color if the mouse is not over the button
     }
 
     rect(x, y, w, h);
@@ -50,7 +55,7 @@ class Transition {
     textSize(15);
     fill(0);
     textAlign(CENTER);
-    text("T"+id, pos.x-15, pos.y+7);
+    text(id, pos.x-15, pos.y+7);
   }
 }    
 
