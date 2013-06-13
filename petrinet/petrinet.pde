@@ -25,44 +25,47 @@ void draw() {
 }
 
 void mouseClicked() {
+  if(!manager.drawingArc){
   if (manager.utilBox.mouseInsideBoxBar) (manager.utilBox).mouseClicked= true; 
   if (manager.utilBox.mouseInsideTB) (manager.utilBox).mouseClicked= true; 
   if (manager.utilBox.mouseInsidePB) (manager.utilBox).mouseClicked= true;
+  }
 
 
   if (!(manager.placeCreated || manager.transitionCreated)) {
     if (((manager.mouseInsidePlace!=null || manager.mouseInsideTransition!=null) && (!manager.drawingArc))) {
       manager.drawingArc=true;
 
-      if (manager.mouseInsidePlace!=null){
+      if (manager.mouseInsidePlace!=null) {
         manager.arcs.add(new Arc(manager.mouseInsidePlace.id, "Place"));
-        ((Arc)manager.arcs.get(manager.arcs.size()-1)).fromPlace=manager.mouseInsidePlace;  
+        ((Arc)manager.arcs.get(manager.arcs.size()-1)).fromPlace=manager.mouseInsidePlace;
+      }
+      if (manager.mouseInsideTransition!=null) {
+        manager.arcs.add(new Arc(manager.mouseInsideTransition.id, "Transition"));
+        ((Arc)manager.arcs.get(manager.arcs.size()-1)).fromTransition=manager.mouseInsideTransition;
+      }
     }
-      if (manager.mouseInsideTransition!=null) manager.arcs.add(new Arc(manager.mouseInsideTransition.id, "Transition"));
-
-    } 
-    if (((manager.mouseInsidePlace==null || manager.mouseInsideTransition==null) && (manager.drawingArc))) {
-                ((Arc)manager.arcs.get(manager.arcs.size()-1)).newVertex(mouseX, mouseY);
-
-        
-        }
+    
+    if (((manager.mouseInsidePlace==null && manager.mouseInsideTransition==null) && (manager.drawingArc))) {
+      ((Arc)manager.arcs.get(manager.arcs.size()-1)).newVertex(mouseX, mouseY);
+    }
 
     if (manager.mouseInsidePlace!=null && manager.drawingArc) {
       if (((Arc)manager.arcs.get(manager.arcs.size()-1)).fromType.equals("Transition")) {
-        ((Arc)manager.arcs.get(manager.arcs.size()-1)).newVertex(mouseX, mouseY);
         manager.drawingArc=false;
-      } 
-      else
-        ((Arc)manager.arcs.get(manager.arcs.size()-1)).newVertex(mouseX, mouseY);
-    }
+       ((Arc)manager.arcs.get(manager.arcs.size()-1)).to=manager.mouseInsidePlace.id;
+       ((Arc)manager.arcs.get(manager.arcs.size()-1)).toPlace=manager.mouseInsidePlace;
+       } 
+   }
 
     if (manager.mouseInsideTransition!=null && manager.drawingArc) {
       if (((Arc)manager.arcs.get(manager.arcs.size()-1)).fromType.equals("Place")) {
-        ((Arc)manager.arcs.get(manager.arcs.size()-1)).newVertex(mouseX, mouseY);
         manager.drawingArc=false;
+        ((Arc)manager.arcs.get(manager.arcs.size()-1)).to=manager.mouseInsideTransition.id;
+        ((Arc)manager.arcs.get(manager.arcs.size()-1)).toTransition=manager.mouseInsideTransition;
+
       } 
-      else
-        ((Arc)manager.arcs.get(manager.arcs.size()-1)).newVertex(mouseX, mouseY);
+     
     }
   }
 

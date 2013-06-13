@@ -22,7 +22,7 @@ class Transition {
   void tShape( float x, float y, float w, float h )
   {
     // if mouse is inside rect
-    if ( mouseX >= x  &&  mouseX <= x+w && mouseY >= y  &&  mouseY <= y+h) { 
+    if ( mouseX >= x-w/2  &&  mouseX <= x+w/2 && mouseY >= y-h/2  &&  mouseY <= y+h/2) { 
       if (!mouseDragged)   mouseInside=true;
       if(!manager.transitionCreated)  manager.mouseInsideTransition=(Transition)manager.transitions.get(index);
 
@@ -36,8 +36,11 @@ class Transition {
       
       }fill(0, 0, 0, 255);     // the color if the mouse is not over the button
     }
+    rectMode(CENTER);
+    rect(x, y, w, h);   
+    rectMode(CORNER);
 
-    rect(x, y, w, h);
+
   }
 
   void draw(Boolean mouseDragged) {
@@ -49,8 +52,9 @@ class Transition {
       pos.x+=mouseMov.x;
       pos.y+=mouseMov.y;
     }
-
     tShape(pos.x, pos.y, w, h);
+
+    
 
     textSize(15);
     fill(0);
