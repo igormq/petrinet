@@ -32,8 +32,85 @@ class Manager {
     this.bg=bg;
   }
 
+  //Moves UtilBox
+  void moveUtilBox() {
+    if (! drawingArc) {
+      if ( utilBox.mouseInsideBoxBar) ( utilBox).mouseClicked= true;
+    }
+  }
+  //Creating places
+  void createPlace() {
+    if (! drawingArc) {
+      if ( utilBox.mouseInsidePB) ( utilBox).mouseClicked= true;
+    }
+
+    //When we have just created a place 
+    if ( placeCreated) {
+      placeCreated=false;
+      mouseClicked=false;
+    }
+  }
 
 
+  //Creating transition
+  void createTransition() {
+    if (! drawingArc) {
+      if ( utilBox.mouseInsideTB) ( utilBox).mouseClicked= true;
+    }
+
+    //When we have just created atransition
+    //next click will place it
+    if ( transitionCreated) {
+      transitionCreated=false;
+      mouseClicked=false;
+    }
+  }
+
+
+
+
+
+  //Creating Arc
+  void createArc() {
+    if (!( placeCreated ||  transitionCreated)) {
+      if ((( mouseInsidePlace!=null ||  mouseInsideTransition!=null) && (! drawingArc))) {
+        drawingArc=true;
+
+        if ( mouseInsidePlace!=null) {
+          arcs.add(new Arc( mouseInsidePlace.id, "Place"));
+          ((Arc) arcs.get( arcs.size()-1)).fromPlace= mouseInsidePlace;
+        }
+        if ( mouseInsideTransition!=null) {
+          arcs.add(new Arc( mouseInsideTransition.id, "Transition"));
+          ((Arc) arcs.get( arcs.size()-1)).fromTransition= mouseInsideTransition;
+        }
+      }
+
+      if ((( mouseInsidePlace==null &&  mouseInsideTransition==null) && ( drawingArc))) {
+        ((Arc) arcs.get( arcs.size()-1)).newVertex(mouseX, mouseY);
+      }
+
+      if ( mouseInsidePlace!=null &&  drawingArc) {
+        if (((Arc) arcs.get( arcs.size()-1)).fromType.equals("Transition")) {
+          drawingArc=false;
+          ((Arc) arcs.get( arcs.size()-1)).to= mouseInsidePlace.id;
+          ((Arc) arcs.get( arcs.size()-1)).toPlace= mouseInsidePlace;
+        }
+      }
+
+      if ( mouseInsideTransition!=null &&  drawingArc) {
+        if (((Arc) arcs.get( arcs.size()-1)).fromType.equals("Place")) {
+          drawingArc=false;
+          ((Arc) arcs.get( arcs.size()-1)).to= mouseInsideTransition.id;
+          ((Arc) arcs.get( arcs.size()-1)).toTransition= mouseInsideTransition;
+        }
+      }
+      if (mouseButton==RIGHT &&  drawingArc) {
+        arcs.remove( arcs.size()-1);
+        drawingArc=false;
+      }
+    }
+  }
 
 
 
@@ -47,10 +124,20 @@ class Manager {
       if (placeDragged!=null) {
         places.remove(int(placeDragged.index));
         placeDragged=null;
+        mouseInsidePlace=null;
+        if (drawingArc) {
+          arcs.remove(arcs.size()-1);
+          drawingArc=false;
+        }
       }
       if (transitionDragged!=null) {
         transitions.remove(int(transitionDragged.index));
         transitionDragged=null;
+        mouseInsideTransition=null;
+        if (drawingArc) {
+          arcs.remove(arcs.size()-1);
+          drawingArc=false;
+        }
       }
       tint(150, 100); // the color if the mouse is over the button
     } 

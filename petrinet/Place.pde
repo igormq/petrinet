@@ -26,7 +26,7 @@ class Place {
       if (!mouseDragged)   mouseInside=true;
       if (!manager.placeCreated) manager.mouseInsidePlace=(Place)manager.places.get(index);
 
-      fill(bColor); // the color if the mouse is over the button
+      fill(bColor,100); // the color if the mouse is over the button
     } 
     else {
       if ((!mouseDragged)&&mouseInside) {
@@ -34,7 +34,7 @@ class Place {
       manager.mouseInsidePlace=null;
     }
         
-      fill(bColor, 255);     // the color if the mouse is not over the button
+      fill(bColor, 400);     // the color if the mouse is not over the button
     }
 
     ellipse(x, y, radius, radius);

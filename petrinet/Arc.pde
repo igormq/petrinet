@@ -50,8 +50,9 @@ class Arc {
     }
     
     if (toPlace!=null) {
-      curveVertex(toPlace.pos.x, toPlace.pos.y);
-      curveVertex(toPlace.pos.x, toPlace.pos.y);
+      PVector tail = new PVector(toPlace.pos.x, toPlace.pos.y);
+       curveVertex(tail.x, tail.y);
+      curveVertex(tail.x, tail.y);
     }
     if (toTransition!=null) {
       curveVertex(toTransition.pos.x, toTransition.pos.y);  
