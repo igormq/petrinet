@@ -67,6 +67,10 @@ void mouseClicked() {
       } 
      
     }
+        if(mouseButton==RIGHT && manager.drawingArc){
+      manager.arcs.remove(manager.arcs.size()-1);
+      manager.drawingArc=false;
+    }
   }
 
   //When we have just created a place or transition
