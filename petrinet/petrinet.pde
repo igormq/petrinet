@@ -34,7 +34,10 @@ void mouseClicked() {
     if (((manager.mouseInsidePlace!=null || manager.mouseInsideTransition!=null) && (!manager.drawingArc))) {
       manager.drawingArc=true;
 
-      if (manager.mouseInsidePlace!=null) manager.arcs.add(new Arc(manager.mouseInsidePlace.id, "Place"));
+      if (manager.mouseInsidePlace!=null){
+        manager.arcs.add(new Arc(manager.mouseInsidePlace.id, "Place"));
+        ((Arc)manager.arcs.get(manager.arcs.size()-1)).fromPlace=manager.mouseInsidePlace;  
+    }
       if (manager.mouseInsideTransition!=null) manager.arcs.add(new Arc(manager.mouseInsideTransition.id, "Transition"));
 
     } 
