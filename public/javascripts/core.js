@@ -21,7 +21,7 @@ core_draw = function(processing) {
     return _results;
   };
   processing.mouseClicked = function() {
-    return this.objects.push(new Lugar(processing, {
+    return this.objects.push(new Input(processing, {
       x: processing.mouseX,
       y: processing.mouseY
     }));

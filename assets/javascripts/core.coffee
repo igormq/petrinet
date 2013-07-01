@@ -21,7 +21,7 @@ core_draw = (processing) ->
     object.draw() for object in @objects
 
   processing.mouseClicked = () ->
-    @objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY }))
+    @objects.push(new Input(processing, {x: processing.mouseX, y: processing.mouseY }))
 
 
   resizeWindow = () ->
