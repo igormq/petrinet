@@ -22,7 +22,7 @@ core_draw = function(processing) {
   };
   processing.mouseClicked = function() {
     return this._objects.push(new Lugar(processing, {
-      x: mouseX,
+      x: processing.mouseX,
       y: processing.mouseY
     }));
   };
@@ -40,7 +40,7 @@ core_draw = function(processing) {
 };
 
 $(function() {
-  var canvas;
+  var canvas, processing;
   canvas = document.getElementById("processing");
-  return this.processing = new Processing(canvas, core_draw);
+  return processing = new Processing(canvas, core_draw);
 });
