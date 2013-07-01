@@ -12,6 +12,7 @@ core_draw = (processing) ->
     processing.background()
 
     @manager = new Manager(processing)
+    @teste = new Transicao processing, {x: 200, y: 200}
 
     @objects = []
 

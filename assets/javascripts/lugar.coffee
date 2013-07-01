@@ -13,9 +13,5 @@ class Lugar extends Objeto
 			@processing.fill(0,0,255)
 		@processing.ellipse(@position.x, @position.y, Lugar._radius, Lugar._radius);
 
-
-	mouseClicked: (mouseX, mouseY) ->
-		if (@processing.dist(mouseX, mouseY, @position.x, @position.y) <= Lugar._radius)
-			@_selected = true 
-		else
-			@_selected = false
+	mouseInside: (mouseX, mouseY) ->
+		@processing.dist(mouseX, mouseY, @position.x, @position.y) <= Lugar._radius
