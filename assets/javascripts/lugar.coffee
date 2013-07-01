@@ -1,14 +1,10 @@
 # /javascripts/lugar.coffee
 
-class Lugar
-	@_id: 1
+class Lugar extends Objeto
 	@_radius: 30
 
 	constructor: (@processing, opts) ->
-		@position = new @processing.PVector(opts.x, opts.y)
-		@id = Lugar._id++
-		@_selected = false
-		this.draw()
+		super @processing, opts
 
 	draw: () ->
 		if !@_selected
