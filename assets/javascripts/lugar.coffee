@@ -25,3 +25,6 @@ class Lugar extends Objeto
 			@_selected = true
 		else
 			@_selected = false
+
+	mouseInside: (mouseX, mouseY) ->
+		@processing.dist(mouseX, mouseY, @position.x, @position.y) <= Lugar._radius

@@ -10,6 +10,14 @@ Objeto = (function() {
     this._selected = false;
   }
 
+  Objeto.prototype.mouseClicked = function(mouseX, mouseY) {
+    if (this.mouseInside(mouseX, mouseY)) {
+      return this._selected = true;
+    } else {
+      return this._selected = false;
+    }
+  };
+
   return Objeto;
 
 })();

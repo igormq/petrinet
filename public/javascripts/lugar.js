@@ -36,6 +36,10 @@ Lugar = (function(_super) {
     }
   };
 
+  Lugar.prototype.mouseInside = function(mouseX, mouseY) {
+    return this.processing.dist(mouseX, mouseY, this.position.x, this.position.y) <= Lugar._radius;
+  };
+
   return Lugar;
 
 })(Objeto);

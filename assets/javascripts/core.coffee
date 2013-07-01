@@ -13,7 +13,9 @@ core_draw = (processing) ->
 
     @manager = new Manager(processing)
 
-    @input = new Input(processing)
+    @teste = new Transicao(processing, {x: 200, y: 200})
+
+    @popup = new Popup(processing)
 
     @objects = []
 
@@ -22,14 +24,15 @@ core_draw = (processing) ->
 
   processing.mouseClicked = () ->
     if processing.mouseButton == processing.RIGHT
-      @input.mouseClicked(processing.mouseX, processing.mouseY)
+      # @popup.mouseClicked(processing.mouseX, processing.mouseY)
+      @objects.push(new Transicao(processing, {x: processing.mouseX, y: processing.mouseY}))
     else
       object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
 
 
   processing.mouseMoved = () ->
-    if @input.visible?
-      @input.mouseMoved(processing.mouseX, processing.mouseY)
+    if @popup.visible?
+      @popup.mouseMoved(processing.mouseX, processing.mouseY)
 
 
   resizeWindow = () ->
@@ -43,7 +46,7 @@ core_draw = (processing) ->
 
   processing.draw = () ->
     resizeWindow()
-    @input.draw()
+    @popup.draw()
     object.draw() for object in @objects
 
 
