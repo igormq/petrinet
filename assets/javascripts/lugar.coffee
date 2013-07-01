@@ -3,8 +3,8 @@
 class Lugar extends Objeto
 	@_radius: 30
 
-	constructor: (@processing, opts) ->
-		super @processing, opts
+	constructor: (processing, opts) ->
+		super processing, opts
 
 	draw: () ->
 		if !@_selected
