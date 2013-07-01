@@ -1,18 +1,17 @@
 # /javascripts/lugar.coffee
 
-class Lugar
-	@_id: 1
-	@_radius: 40
+class Lugar extends Objeto
+	@_radius: 30
 
 	constructor: (@processing, opts) ->
-		@position = new @processing.PVector(opts.x, opts.y)
-		@id = Lugar._id++
-		@fichas = 0
-		@.draw()
+		super @processing, opts
 
 	draw: () ->
-		@processing.fill(@processing.white)
-		@processing.ellipse(@position.x, @position.y, Lugar._radius, Lugar._radius)
+		if !@_selected
+			@processing.fill(255,0,0)
+		else
+			@processing.fill(0,0,255)
+		@processing.ellipse(@position.x, @position.y, Lugar._radius, Lugar._radius);
 		@._drawFichas()
 
 	_drawFichas: () ->
@@ -22,5 +21,7 @@ class Lugar
 		@processing.text(@fichas, @position.x, @position.y)
 
 	mouseClicked: (mouseX, mouseY) ->
-
-
+		if (@processing.dist(mouseX, mouseY, @position.x, @position.y) <= Lugar._radius)
+			@_selected = true
+		else
+			@_selected = false

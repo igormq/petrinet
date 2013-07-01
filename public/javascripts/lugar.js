@@ -1,20 +1,23 @@
-var Lugar;
+var Lugar,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-Lugar = (function() {
-  Lugar._id = 1;
+Lugar = (function(_super) {
+  __extends(Lugar, _super);
 
-  Lugar._radius = 40;
+  Lugar._radius = 30;
 
   function Lugar(processing, opts) {
     this.processing = processing;
-    this.position = new this.processing.PVector(opts.x, opts.y);
-    this.id = Lugar._id++;
-    this.fichas = 0;
-    this.draw();
+    Lugar.__super__.constructor.call(this, this.processing, opts);
   }
 
   Lugar.prototype.draw = function() {
-    this.processing.fill(this.processing.white);
+    if (!this._selected) {
+      this.processing.fill(255, 0, 0);
+    } else {
+      this.processing.fill(0, 0, 255);
+    }
     this.processing.ellipse(this.position.x, this.position.y, Lugar._radius, Lugar._radius);
     return this._drawFichas();
   };
@@ -26,8 +29,14 @@ Lugar = (function() {
     return this.processing.text(this.fichas, this.position.x, this.position.y);
   };
 
-  Lugar.prototype.mouseClicked = function(mouseX, mouseY) {};
+  Lugar.prototype.mouseClicked = function(mouseX, mouseY) {
+    if (this.processing.dist(mouseX, mouseY, this.position.x, this.position.y) <= Lugar._radius) {
+      return this._selected = true;
+    } else {
+      return this._selected = false;
+    }
+  };
 
   return Lugar;
 
-})();
+})(Objeto);

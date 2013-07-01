@@ -16,12 +16,13 @@ core_draw = (processing) ->
     @objects = []
 
   # where the fun stuff happens:
-  processing.draw = () ->
-    resizeWindow()
-    object.draw() for object in @objects
+
 
   processing.mouseClicked = () ->
-    @objects.push(new Input(processing, {x: processing.mouseX, y: processing.mouseY }))
+    if processing.mouseButton == processing.RIGHT
+      @objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY }))
+    else
+      object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
 
 
   resizeWindow = () ->
@@ -32,6 +33,10 @@ core_draw = (processing) ->
       $('canvas').width($(window).width())
       $('canvas').height(setupHeight)
       processing.size($(window).width(), setupHeight)
+
+  processing.draw = () ->
+    resizeWindow()
+    object.draw() for object in @objects
 
 
 # wait for the DOM to be ready,
