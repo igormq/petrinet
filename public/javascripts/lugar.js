@@ -8,8 +8,7 @@ Lugar = (function(_super) {
   Lugar._radius = 30;
 
   function Lugar(processing, opts) {
-    this.processing = processing;
-    Lugar.__super__.constructor.call(this, this.processing, opts);
+    Lugar.__super__.constructor.call(this, processing, opts);
   }
 
   Lugar.prototype.draw = function() {

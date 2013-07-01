@@ -1,18 +1,32 @@
 # /javascripts/input.coffee
 class Input
-	@_width: 120
-	@_height: 40
-	constructor: (@processing, opts) ->
-		@position = new @processing.PVector(opts.x, opts.y)
+	@_largura: 120
+	@_altura: 40
+
+	constructor: (@processing) ->
+		@visible = false
 
 	draw: () ->
-		@processing.rect(@position.x, @position.y, Input._width, Input._height)
-		@processing.line(@position.x + 40, @position.x + 40, @position.y, @position.y + 40, Input._width, Input._height)
-		@processing.ellipse(@position.x + 20 , @position.y + 20, 20, 20)
+		if @visible
+			@processing.rect(@position.x, @position.y, Input._largura, Input._altura)
+			@processing.line(@position.x + 40, @position.y, @position.x + 40, @position.y + 40, Input._largura, Input._altura)
+			@processing.line(@position.x + 80, @position.y, @position.x + 80, @position.y + 40, Input._largura, Input._altura)
+			@processing.ellipse(@position.x + 20 , @position.y + 20, 20, 20)
 
-	mouseMoved: () ->
+	mouseInside: (mouseX, mouseY) ->
+		if @.visible == false
+			return false
 
-	mouseHover: () ->
+		if mouseX >= @position.x  and  mouseX <= @position.x + Input._largura and mouseY >= @position.y  and  mouseY <= @position.y + Input._altura
+			true
+		else
+			false
 
-	mouseClicked: () ->
+	mouseClicked: (mouseX, mouseY) ->
+			@visible = not @visible
+			@position = new @processing.PVector(mouseX, mouseY)
 
+
+	mouseMoved: (mouseX, mouseY) ->
+			if not @.mouseInside(mouseX, mouseY)
+				@visible = false

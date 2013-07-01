@@ -7,15 +7,13 @@ core_draw = function(processing) {
     processing.println('PetriNet 0.0.1');
     processing.background();
     this.manager = new Manager(processing);
+    this.input = new Input(processing);
     return this.objects = [];
   };
   processing.mouseClicked = function() {
     var object, _i, _len, _ref, _results;
     if (processing.mouseButton === processing.RIGHT) {
-      return this.objects.push(new Lugar(processing, {
-        x: processing.mouseX,
-        y: processing.mouseY
-      }));
+      return this.input.mouseClicked(processing.mouseX, processing.mouseY);
     } else {
       _ref = this.objects;
       _results = [];
@@ -24,6 +22,11 @@ core_draw = function(processing) {
         _results.push(object.mouseClicked(processing.mouseX, processing.mouseY));
       }
       return _results;
+    }
+  };
+  processing.mouseMoved = function() {
+    if (this.input.visible != null) {
+      return this.input.mouseMoved(processing.mouseX, processing.mouseY);
     }
   };
   resizeWindow = function() {
@@ -40,6 +43,7 @@ core_draw = function(processing) {
   return processing.draw = function() {
     var object, _i, _len, _ref, _results;
     resizeWindow();
+    this.input.draw();
     _ref = this.objects;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {

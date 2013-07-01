@@ -13,6 +13,8 @@ core_draw = (processing) ->
 
     @manager = new Manager(processing)
 
+    @input = new Input(processing)
+
     @objects = []
 
   # where the fun stuff happens:
@@ -20,9 +22,14 @@ core_draw = (processing) ->
 
   processing.mouseClicked = () ->
     if processing.mouseButton == processing.RIGHT
-      @objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY }))
+      @input.mouseClicked(processing.mouseX, processing.mouseY)
     else
       object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
+
+
+  processing.mouseMoved = () ->
+    if @input.visible?
+      @input.mouseMoved(processing.mouseX, processing.mouseY)
 
 
   resizeWindow = () ->
@@ -36,6 +43,7 @@ core_draw = (processing) ->
 
   processing.draw = () ->
     resizeWindow()
+    @input.draw()
     object.draw() for object in @objects
 
 
