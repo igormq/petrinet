@@ -31,11 +31,11 @@ manager.createPlace();
 manager.createTransition();
 manager.createArc();
 
-  
+
 }
 
 void mouseDragged() {
-  (manager.utilBox).mouseDragged=true; 
+  (manager.utilBox).mouseDragged=true;
   manager.mouseDragged=true;
 }
 

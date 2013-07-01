@@ -3,6 +3,7 @@
 core_draw = (processing) ->
 
   # processing's "init" method:
+  @_objects = []
 
   processing.setup = () ->
     resizeWindow()
@@ -16,12 +17,14 @@ core_draw = (processing) ->
   # where the fun stuff happens:
   processing.draw = () ->
     resizeWindow()
+    object.draw() for object in @_objects
 
   processing.mouseClicked = () ->
+    @_objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY }))
 
 
   resizeWindow = () ->
-    if( $(document).height() > $(window).height() )
+    if $(document).height() > $(window).height()
       setupHeight = $(document).height()
     else
       setupHeight = $(window).height()

@@ -2,6 +2,7 @@ var core_draw;
 
 core_draw = function(processing) {
   var resizeWindow;
+  this._objects = [];
   processing.setup = function() {
     resizeWindow();
     processing.println('PetriNet 0.0.1');
@@ -9,9 +10,22 @@ core_draw = function(processing) {
     return this.manager = new Manager(processing);
   };
   processing.draw = function() {
-    return resizeWindow();
+    var object, _i, _len, _ref, _results;
+    resizeWindow();
+    _ref = this._objects;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      object = _ref[_i];
+      _results.push(object.draw());
+    }
+    return _results;
   };
-  processing.mouseClicked = function() {};
+  processing.mouseClicked = function() {
+    return this._objects.push(new Lugar(processing, {
+      x: mouseX,
+      y: processing.mouseY
+    }));
+  };
   return resizeWindow = function() {
     var setupHeight;
     if ($(document).height() > $(window).height()) {
@@ -26,7 +40,7 @@ core_draw = function(processing) {
 };
 
 $(function() {
-  var canvas, processing;
+  var canvas;
   canvas = document.getElementById("processing");
-  return processing = new Processing(canvas, core_draw);
+  return this.processing = new Processing(canvas, core_draw);
 });

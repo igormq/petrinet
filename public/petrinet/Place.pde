@@ -6,7 +6,7 @@ class Place {
   Boolean mouseInside=false;
   String id;
   int index;
-  
+
   int tokens=0;
   int tokensCap=100;
 
@@ -22,18 +22,18 @@ class Place {
   void pShape( float x, float y, float radius, color bColor )
   {
     // if mouse is inside ellipse
-    if ( (dist(mouseX, mouseY, x, y))<=radius) { 
+    if ( (dist(mouseX, mouseY, x, y))<=radius) {
       if (!mouseDragged)   mouseInside=true;
       if (!manager.placeCreated) manager.mouseInsidePlace=(Place)manager.places.get(index);
 
       fill(bColor,100); // the color if the mouse is over the button
-    } 
+    }
     else {
       if ((!mouseDragged)&&mouseInside) {
         mouseInside=false;
       manager.mouseInsidePlace=null;
     }
-        
+
       fill(bColor, 400);     // the color if the mouse is not over the button
     }
 
@@ -60,5 +60,4 @@ class Place {
 
 
   }
-}    
-
+}
