@@ -3,7 +3,6 @@
 core_draw = (processing) ->
 
   # processing's "init" method:
-  @_objects = []
 
   processing.setup = () ->
     resizeWindow()
@@ -14,13 +13,15 @@ core_draw = (processing) ->
 
     @manager = new Manager(processing)
 
+    @objects = []
+
   # where the fun stuff happens:
   processing.draw = () ->
     resizeWindow()
-    object.draw() for object in @_objects
+    object.draw() for object in @objects
 
   processing.mouseClicked = () ->
-    @_objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY }))
+    @objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY }))
 
 
   resizeWindow = () ->

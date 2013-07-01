@@ -1,7 +1,7 @@
 # /javascripts/lugar.coffee
 
 class Lugar
-	@_id: 0
+	@_id: 1
 	@_radius: 30
 
 	constructor: (@processing, opts) ->
@@ -11,3 +11,8 @@ class Lugar
 
 	draw: () ->
 		@processing.ellipse(@position.x, @position.y, Lugar._radius, Lugar._radius);
+
+
+	mouseClicked: (mouseX, mouseY) ->
+
+
