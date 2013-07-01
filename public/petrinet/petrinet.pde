@@ -2,7 +2,7 @@ Manager manager;
 
 void setup() {
   //Setting screen size
-  size(1024, 768);
+  size(1024,768);
 
   //Loading background
   PImage bg = loadImage("bg.png");

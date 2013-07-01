@@ -143,7 +143,7 @@ class UtilBox {
       fill(0, 0, 0, 225);
       rect(boxX, boxY+300, 200, 30);
       fill(255);
-      text("Informations", boxX+35, boxY+323);
+      text("Information", boxX+35, boxY+323);
       
 
     }
