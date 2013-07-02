@@ -14,16 +14,23 @@ class Popup
 			@processing.ellipse(@position.x + 20 , @position.y + 20, 20, 20)
 
 	mouseInside: (mouseX, mouseY) ->
-		if @.visible == false
+		if @visible == false
 			return false
 
 		mouseX >= @position.x  and  mouseX <= @position.x + Popup._largura and mouseY >= @position.y  and  mouseY <= @position.y + Popup._altura
 
-	mouseClicked: (mouseX, mouseY) ->
-			@visible = not @visible
+	mouseClicked: (mouseX, mouseY, callback = null) ->
+		if @visible and @mouseInside(mouseX, mouseY)
+			callback? new Lugar(@processing, { x: mouseX, y: mouseY } ) if callback?
+		else
 			@position = new @processing.PVector(mouseX, mouseY)
+
+		@visible = not @visible
 
 
 	mouseMoved: (mouseX, mouseY) ->
-			if not @.mouseInside(mouseX, mouseY)
+			if not @mouseInside(mouseX, mouseY)
+				@processing.cursor @processing.ARROW
 				@visible = false
+			else
+				@processing.cursor @processing.HAND

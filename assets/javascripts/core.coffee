@@ -23,16 +23,24 @@ core_draw = (processing) ->
 
 
   processing.mouseClicked = () ->
-    if processing.mouseButton == processing.RIGHT
-      # @popup.mouseClicked(processing.mouseX, processing.mouseY)
-      @objects.push(new Transicao(processing, {x: processing.mouseX, y: processing.mouseY}))
-    else
+    if !(true in (object.mouseInside(processing.mouseX, processing.mouseY) for object in @objects))
+      if processing.mouseButton == processing.RIGHT
+        @popup.mouseClicked processing.mouseX, processing.mouseY
+      else
+        if @popup.visible
+          @popup.mouseClicked processing.mouseX, processing.mouseY, (object) =>
+            @objects.push(object) if object?
+    else if processing.mouseButton == processing.LEFT
       object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
-
 
   processing.mouseMoved = () ->
     if @popup.visible?
       @popup.mouseMoved(processing.mouseX, processing.mouseY)
+    else
+      if (true in (object.mouseInside(processing.mouseX, processing.mouseY) for object in @objects))
+        processing.cursor(processing.HAND)
+      else
+        processing.cursor(processing.ARROW)
 
 
   resizeWindow = () ->
@@ -43,6 +51,7 @@ core_draw = (processing) ->
       $('canvas').width($(window).width())
       $('canvas').height(setupHeight)
       processing.size($(window).width(), setupHeight)
+
 
   processing.draw = () ->
     resizeWindow()

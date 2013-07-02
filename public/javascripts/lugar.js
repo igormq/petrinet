@@ -5,10 +5,11 @@ var Lugar,
 Lugar = (function(_super) {
   __extends(Lugar, _super);
 
-  Lugar._radius = 30;
+  Lugar._radius = 15;
 
   function Lugar(processing, opts) {
     Lugar.__super__.constructor.call(this, processing, opts);
+    this.fichas = 0;
   }
 
   Lugar.prototype.draw = function() {
@@ -17,7 +18,7 @@ Lugar = (function(_super) {
     } else {
       this.processing.fill(0, 0, 255);
     }
-    this.processing.ellipse(this.position.x, this.position.y, Lugar._radius, Lugar._radius);
+    this.processing.ellipse(this.position.x, this.position.y, Lugar._radius * 2, Lugar._radius * 2);
     return this._drawFichas();
   };
 
@@ -26,14 +27,6 @@ Lugar = (function(_super) {
     this.processing.textSize(20);
     this.processing.textAlign(this.processing.CENTER, this.processing.CENTER);
     return this.processing.text(this.fichas, this.position.x, this.position.y);
-  };
-
-  Lugar.prototype.mouseClicked = function(mouseX, mouseY) {
-    if (this.processing.dist(mouseX, mouseY, this.position.x, this.position.y) <= Lugar._radius) {
-      return this._selected = true;
-    } else {
-      return this._selected = false;
-    }
   };
 
   Lugar.prototype.mouseInside = function(mouseX, mouseY) {

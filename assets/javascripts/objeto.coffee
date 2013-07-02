@@ -10,6 +10,7 @@ class Objeto
 
 	mouseClicked: (mouseX, mouseY) ->
 		if @.mouseInside mouseX, mouseY
-			@_selected = true 
+			@_selected = true
 		else
 			@_selected = false
+		return @_selected

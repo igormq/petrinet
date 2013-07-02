@@ -26,14 +26,31 @@ Popup = (function() {
     return mouseX >= this.position.x && mouseX <= this.position.x + Popup._largura && mouseY >= this.position.y && mouseY <= this.position.y + Popup._altura;
   };
 
-  Popup.prototype.mouseClicked = function(mouseX, mouseY) {
-    this.visible = !this.visible;
-    return this.position = new this.processing.PVector(mouseX, mouseY);
+  Popup.prototype.mouseClicked = function(mouseX, mouseY, callback) {
+    if (callback == null) {
+      callback = null;
+    }
+    if (this.visible && this.mouseInside(mouseX, mouseY)) {
+      if (callback != null) {
+        if (typeof callback === "function") {
+          callback(new Lugar(this.processing, {
+            x: mouseX,
+            y: mouseY
+          }));
+        }
+      }
+    } else {
+      this.position = new this.processing.PVector(mouseX, mouseY);
+    }
+    return this.visible = !this.visible;
   };
 
   Popup.prototype.mouseMoved = function(mouseX, mouseY) {
     if (!this.mouseInside(mouseX, mouseY)) {
+      this.processing.cursor(this.processing.ARROW);
       return this.visible = false;
+    } else {
+      return this.processing.cursor(this.processing.HAND);
     }
   };
 

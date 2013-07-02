@@ -23,7 +23,7 @@ Transicao = (function(_super) {
   };
 
   Transicao.prototype.mouseInside = function(mouseX, mouseY) {
-    return mouseX >= this.position.x && mouseX <= this.position.x + Popup._largura && mouseY >= this.position.y && mouseY <= this.position.y + Popup._altura;
+    return mouseX >= this.position.x - Transicao._largura / 2 && mouseX <= this.position.x + Transicao._largura / 2 && mouseY >= this.position.y - Transicao._altura && mouseY <= this.position.y + Transicao._altura;
   };
 
   return Transicao;
