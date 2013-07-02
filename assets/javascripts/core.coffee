@@ -2,8 +2,6 @@
 # Our main sketch object:
 core_draw = (processing) ->
 
-  # processing's "init" method:
-
   processing.setup = () ->
     resizeWindow()
 
@@ -18,8 +16,6 @@ core_draw = (processing) ->
     @popup = new Popup(processing)
 
     @objects = []
-
-  # where the fun stuff happens:
 
 
   processing.mouseClicked = () ->

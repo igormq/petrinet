@@ -47,8 +47,7 @@ Popup = (function() {
 
   Popup.prototype.mouseMoved = function(mouseX, mouseY) {
     if (!this.mouseInside(mouseX, mouseY)) {
-      this.processing.cursor(this.processing.ARROW);
-      return this.visible = false;
+      return this.processing.cursor(this.processing.ARROW);
     } else {
       return this.processing.cursor(this.processing.HAND);
     }

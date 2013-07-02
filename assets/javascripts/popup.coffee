@@ -31,6 +31,5 @@ class Popup
 	mouseMoved: (mouseX, mouseY) ->
 			if not @mouseInside(mouseX, mouseY)
 				@processing.cursor @processing.ARROW
-				@visible = false
 			else
 				@processing.cursor @processing.HAND
