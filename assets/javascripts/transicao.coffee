@@ -18,4 +18,4 @@ class Transicao extends Objeto
 		@processing.rect(@position.x, @position.y, Transicao._largura, Transicao._altura)
 
 	mouseInside: (mouseX, mouseY) ->
-		mouseX >= @position.x - Transicao._largura/2 && mouseX <= @position.x + Transicao._largura/2 && mouseY >= @position.y - Transicao._altura && mouseY <= @position.y + Transicao._altura
+		(mouseX >= @position.x - Transicao._largura/2) && (mouseX <= @position.x + Transicao._largura/2) && (mouseY >= @position.y - Transicao._altura) && (mouseY <= @position.y + Transicao._altura)

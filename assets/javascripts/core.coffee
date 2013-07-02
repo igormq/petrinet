@@ -37,6 +37,9 @@ core_draw = (processing) ->
     processing.println(123)
     object.mouseReleased for object in @objects
 
+  processing.mouseDragged = () ->
+    object.update(processing.mouseX, processing.mouseY) for object in @objects
+
 
   processing.mouseMoved = () ->
     if @popup.visible?
@@ -55,7 +58,6 @@ core_draw = (processing) ->
   processing.draw = () ->
     resizeWindow()
     @popup.draw()
-    object.update(processing.mouseX, processing.mouseY) for object in @objects
     object.draw() for object in @objects
     # processing.println(object.dragged) for object in @objects
 

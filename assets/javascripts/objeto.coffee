@@ -25,5 +25,5 @@ class Objeto
 
 	update: (mouseX, mouseY) ->
 		if @dragged
-			@position.x = mouseX
-			@position.y = mouseY
+			@position.x = mouseX - @_offsetX
+			@position.y = mouseY - @_offsetY
