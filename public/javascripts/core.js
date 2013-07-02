@@ -49,6 +49,36 @@ core_draw = function(processing) {
       return _results;
     }
   };
+  processing.mousePressed = function() {
+    var object, _i, _len, _ref, _results;
+    _ref = this.objects;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      object = _ref[_i];
+      _results.push(object.startDrag(processing.mouseX, processing.mouseY));
+    }
+    return _results;
+  };
+  processing.mouseReleased = function() {
+    var object, _i, _len, _ref, _results;
+    _ref = this.objects;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      object = _ref[_i];
+      _results.push(object.mouseReleased());
+    }
+    return _results;
+  };
+  processing.mouseDragged = function() {
+    var object, _i, _len, _ref, _results;
+    _ref = this.objects;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      object = _ref[_i];
+      _results.push(object.update(processing.mouseX, processing.mouseY));
+    }
+    return _results;
+  };
   processing.mouseMoved = function() {
     var object;
     if (this.popup.visible != null) {

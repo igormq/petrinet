@@ -9,7 +9,7 @@ Lugar = (function(_super) {
 
   function Lugar(processing, opts) {
     Lugar.__super__.constructor.call(this, processing, opts);
-    this.fichas = 0;
+    this.fichas = opts.fichas;
   }
 
   Lugar.prototype.draw = function() {
