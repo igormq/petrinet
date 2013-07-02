@@ -5,6 +5,7 @@ class Lugar extends Objeto
 
 	constructor: (processing, opts) ->
 		super processing, opts
+		@fichas = opts.fichas
 
 	draw: () ->
 		if !@_selected
