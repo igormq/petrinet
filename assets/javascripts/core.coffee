@@ -19,6 +19,7 @@ core_draw = (processing) ->
 
 
   processing.mouseClicked = () ->
+<<<<<<< HEAD
     if !(true in (object.mouseInside(processing.mouseX, processing.mouseY) for object in @objects))
       if processing.mouseButton == processing.RIGHT
         @popup.mouseClicked processing.mouseX, processing.mouseY
@@ -29,6 +30,26 @@ core_draw = (processing) ->
     else if processing.mouseButton == processing.LEFT
       object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
 
+=======
+    if processing.mouseButton == processing.RIGHT
+      # @popup.mouseClicked(processing.mouseX, processing.mouseY)
+      # @objects.push(new Lugar(processing, {x: processing.mouseX, y: processing.mouseY, fichas: 5}))
+      @objects.push(new Transicao(processing, {x: processing.mouseX, y: processing.mouseY}))
+    else
+      object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
+
+  processing.mousePressed = () ->
+    object.startDrag(processing.mouseX, processing.mouseY) for object in @objects
+
+  processing.mouseReleased = () ->
+    processing.println(123)
+    object.mouseReleased for object in @objects
+
+  processing.mouseDragged = () ->
+    object.update(processing.mouseX, processing.mouseY) for object in @objects
+
+
+>>>>>>> 899588ab6a6d792c7ec3d23063aa144c43a1765f
   processing.mouseMoved = () ->
     if @popup.visible?
       @popup.mouseMoved(processing.mouseX, processing.mouseY)
@@ -53,6 +74,7 @@ core_draw = (processing) ->
     resizeWindow()
     @popup.draw()
     object.draw() for object in @objects
+    # processing.println(object.dragged) for object in @objects
 
 
 # wait for the DOM to be ready,

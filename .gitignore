@@ -1,1 +1,4 @@
 node_modules
+public/javascripts/lugar.js
+public/javascripts/objeto.js
+public/javascripts/core.js
