@@ -55,7 +55,9 @@ core_draw = function(processing) {
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       object = _ref[_i];
-      _results.push(object.startDrag(processing.mouseX, processing.mouseY));
+      if (object.draggable) {
+        _results.push(object.startDrag(processing.mouseX, processing.mouseY));
+      }
     }
     return _results;
   };

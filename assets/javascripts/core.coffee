@@ -30,7 +30,7 @@ core_draw = (processing) ->
       object.mouseClicked(processing.mouseX, processing.mouseY) for object in @objects
 
   processing.mousePressed = () ->
-    object.startDrag(processing.mouseX, processing.mouseY) for object in @objects
+    object.startDrag(processing.mouseX, processing.mouseY) for object in @objects when object.draggable
 
   processing.mouseReleased = () ->
     object.mouseReleased() for object in @objects

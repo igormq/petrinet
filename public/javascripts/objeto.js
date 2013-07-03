@@ -6,10 +6,10 @@ Objeto = (function() {
   function Objeto(processing, opts) {
     this.processing = processing;
     this.position = new this.processing.PVector(opts.x, opts.y);
+    this.draggable = opts.draggable != null ? opts.draggable : true;
     this.id = Objeto._id++;
     this._selected = false;
     this.dragged = false;
-    this.draggable = opts.draggable != null ? opts.draggable : true;
   }
 
   Objeto.prototype.mouseClicked = function(mouseX, mouseY) {

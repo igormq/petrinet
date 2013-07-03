@@ -37,8 +37,8 @@ Popup = (function() {
         if (callback != null) {
           if (typeof callback === "function") {
             callback(new Lugar(this.processing, {
-              x: mouseX,
-              y: mouseY
+              x: this.position.x,
+              y: this.position.y
             }));
           }
         }
@@ -46,8 +46,8 @@ Popup = (function() {
         if (callback != null) {
           if (typeof callback === "function") {
             callback(new Transicao(this.processing, {
-              x: mouseX,
-              y: mouseY
+              x: this.position.x,
+              y: this.position.y
             }));
           }
         }

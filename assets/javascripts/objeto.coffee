@@ -5,10 +5,10 @@ class Objeto
 
 	constructor: (@processing, opts) ->
 		@position = new @processing.PVector(opts.x, opts.y)
+		@draggable = if opts.draggable? then opts.draggable else true
 		@id = Objeto._id++
 		@_selected = false
 		@dragged = false
-		@draggable = if opts.draggable? then opts.draggable else true
 
 	mouseClicked: (mouseX, mouseY) ->
 		if @mouseInside mouseX, mouseY

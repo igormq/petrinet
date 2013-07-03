@@ -24,9 +24,9 @@ class Popup
 	mouseClicked: (mouseX, mouseY, callback = null) ->
 		if @visible and @mouseInside(mouseX, mouseY)
 			if mouseX <= @position.x + 40
-				callback? new Lugar(@processing, { x: mouseX, y: mouseY } ) if callback?
+				callback? new Lugar(@processing, { x: @position.x, y: @position.y } ) if callback?
 			else if mouseX <= @position.x + 80
-				callback? new Transicao(@processing, { x: mouseX, y: mouseY } ) if callback?
+				callback? new Transicao(@processing, { x: @position.x, y: @position.y } ) if callback?
 		else
 			@position = new @processing.PVector(mouseX, mouseY)
 
