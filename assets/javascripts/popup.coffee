@@ -8,10 +8,12 @@ class Popup
 
 	draw: () ->
 		if @visible
+			@processing.rectMode @processing.CORNER
 			@processing.rect(@position.x, @position.y, Popup._largura, Popup._altura)
 			@processing.line(@position.x + 40, @position.y, @position.x + 40, @position.y + 40, Popup._largura, Popup._altura)
 			@processing.line(@position.x + 80, @position.y, @position.x + 80, @position.y + 40, Popup._largura, Popup._altura)
 			@processing.ellipse(@position.x + 20 , @position.y + 20, 20, 20)
+			@processing.rect(@position.x + 45 , @position.y + 10, 30, 20)
 
 	mouseInside: (mouseX, mouseY) ->
 		if @visible == false
@@ -21,7 +23,10 @@ class Popup
 
 	mouseClicked: (mouseX, mouseY, callback = null) ->
 		if @visible and @mouseInside(mouseX, mouseY)
-			callback? new Lugar(@processing, { x: mouseX, y: mouseY } ) if callback?
+			if mouseX <= @position.x + 40
+				callback? new Lugar(@processing, { x: mouseX, y: mouseY } ) if callback?
+			else if mouseX <= @position.x + 80
+				callback? new Transicao(@processing, { x: mouseX, y: mouseY } ) if callback?
 		else
 			@position = new @processing.PVector(mouseX, mouseY)
 

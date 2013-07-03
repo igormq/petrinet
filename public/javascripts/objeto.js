@@ -9,6 +9,7 @@ Objeto = (function() {
     this.id = Objeto._id++;
     this._selected = false;
     this.dragged = false;
+    this.draggable = opts.draggable != null ? opts.draggable : true;
   }
 
   Objeto.prototype.mouseClicked = function(mouseX, mouseY) {
@@ -21,7 +22,7 @@ Objeto = (function() {
   };
 
   Objeto.prototype.startDrag = function(mouseX, mouseY) {
-    if (this.mouseInside(mouseX, mouseY) && !this.dragged) {
+    if (this.draggable && this.mouseInside(mouseX, mouseY) && !this.dragged) {
       this.dragged = true;
       this._offsetX = mouseX - this.position.x;
       return this._offsetY = mouseY - this.position.y;
@@ -29,7 +30,9 @@ Objeto = (function() {
   };
 
   Objeto.prototype.mouseReleased = function() {
-    return this.dragged = false;
+    if (this.draggable) {
+      return this.dragged = false;
+    }
   };
 
   Objeto.prototype.update = function(mouseX, mouseY) {

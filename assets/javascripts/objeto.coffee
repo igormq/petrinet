@@ -8,6 +8,7 @@ class Objeto
 		@id = Objeto._id++
 		@_selected = false
 		@dragged = false
+		@draggable = if opts.draggable? then opts.draggable else true
 
 	mouseClicked: (mouseX, mouseY) ->
 		if @mouseInside mouseX, mouseY
@@ -17,13 +18,14 @@ class Objeto
 		return @_selected
 
 	startDrag: (mouseX, mouseY) ->
-		if @mouseInside(mouseX, mouseY) and not @dragged
+		if @draggable and @mouseInside(mouseX, mouseY) and not @dragged
 			@dragged = true
 			@_offsetX = mouseX - @position.x
 			@_offsetY = mouseY - @position.y
 
 	mouseReleased: () ->
-		@dragged = false
+		if @draggable
+			@dragged = false
 
 	update: (mouseX, mouseY) ->
 		if @dragged
