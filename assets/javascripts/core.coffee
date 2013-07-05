@@ -13,10 +13,12 @@ $ ->
     @ox = if @type == 'circle' then @attr("cx") else @attr("x")
     @oy = if @type == 'circle' then @attr("cy") else @attr("y")
     @attr
-      cursor: "move"
+      cursor: "move",
+      opacity: .5
   end = () ->
     @attr
-      cursor: "pointer"
+      cursor: "pointer",
+      opacity: 1.0
   move = (dx, dy) ->
     bbox = @getBBox()
 
@@ -90,14 +92,12 @@ $ ->
     .attr
        fill: "hsb(0, 0, 0)",
        stroke: "none",
-       opacity: .5,
        cursor: "move"
     .drag(move, start, end))
 
   set.push(paper.circle(50, 100, 20)
     .attr
       fill: '#f00',
-      opacity: .5,
       stroke: "#fff",
       data:
         fichas: 0

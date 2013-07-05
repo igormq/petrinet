@@ -23,12 +23,14 @@ $(function() {
     this.ox = this.type === 'circle' ? this.attr("cx") : this.attr("x");
     this.oy = this.type === 'circle' ? this.attr("cy") : this.attr("y");
     return this.attr({
-      cursor: "move"
+      cursor: "move",
+      opacity: .5
     });
   };
   end = function() {
     return this.attr({
-      cursor: "pointer"
+      cursor: "pointer",
+      opacity: 1.0
     });
   };
   move = function(dx, dy) {
@@ -110,12 +112,10 @@ $(function() {
   set.push(paper.rect(100, 100, rectSize, rectSize).attr({
     fill: "hsb(0, 0, 0)",
     stroke: "none",
-    opacity: .5,
     cursor: "move"
   }).drag(move, start, end));
   set.push(paper.circle(50, 100, 20).attr({
     fill: '#f00',
-    opacity: .5,
     stroke: "#fff",
     data: {
       fichas: 0
