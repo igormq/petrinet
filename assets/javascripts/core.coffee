@@ -71,9 +71,11 @@ $ ->
         else
           @stucky = true
           if @type == 'circle'
+            @attr
+              cy: if @pdy > dy then bbox2.y + bbox2.height + 1 + @attr('r') else bbox2.y - 1 - @attr('r')
           else
             @attr
-              y: if @pdy > dy then bbox2.y + bbox2.height + 1 + @attr('r') else bbox2.y - bbox2.height - 1 - @attr('r')
+              y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox2.height - 1
 
   width = 500
   height = 500

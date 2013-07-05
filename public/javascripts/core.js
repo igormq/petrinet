@@ -74,7 +74,7 @@ $(function() {
           }
         }
         if (!line_collision(bbox2.x, bbox2.y, bbox2.width, bbox2.height, bbox.x, y, bbox.width, bbox.height)) {
-          if ((_this.stucky && (!in_range(x, bbox2.x, bbox2.width) || Math.abs(y - bbox.y) < bbox2.height)) || !_this.stucky) {
+          if ((_this.stucky && (!in_range(x, bbox2.x, bbox2.width) || Math.abs(y - bbox.y) < bbox.height)) || !_this.stucky) {
             if (_this.type === 'circle') {
               _this.attr({
                 cy: y + _this.attr('r')
@@ -90,10 +90,12 @@ $(function() {
         } else {
           _this.stucky = true;
           if (_this.type === 'circle') {
-
+            return _this.attr({
+              cy: _this.pdy > dy ? bbox2.y + bbox2.height + 1 + _this.attr('r') : bbox2.y - 1 - _this.attr('r')
+            });
           } else {
             return _this.attr({
-              y: _this.pdy > dy ? bbox2.y + bbox2.height + 1 + _this.attr('r') : bbox2.y - bbox2.height - 1 - _this.attr('r')
+              y: _this.pdy > dy ? bbox2.y + bbox2.height + 1 : bbox2.y - bbox2.height - 1
             });
           }
         }
