@@ -58,7 +58,7 @@ $ ->
               cx: if @pdx > dx then bbox2.x + bbox2.width + 1 + @attr('r') else bbox2.x - 1 - @attr('r')
           else
             @attr
-              x: if @pdx > dx then bbox2.x + bbox2.width + 1 else bbox2.x - bbox2.width - 1
+              x: if @pdx > dx then bbox2.x + bbox2.width + 1 else bbox2.x - bbox.width - 1
 
         if not line_collision(bbox2.x, bbox2.y, bbox2.width, bbox2.height, bbox.x, y, bbox.width, bbox.height)
           if ((@stucky and ( not in_range(x, bbox2.x, bbox2.width) or Math.abs(y - bbox.y) < bbox.height) ) or not @stucky )
@@ -77,7 +77,7 @@ $ ->
               cy: if @pdy > dy then bbox2.y + bbox2.height + 1 + @attr('r') else bbox2.y - 1 - @attr('r')
           else
             @attr
-              y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox2.height - 1
+              y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
 
   width = 500
   height = 500

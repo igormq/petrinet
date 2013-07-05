@@ -71,7 +71,7 @@ $(function() {
             });
           } else {
             _this.attr({
-              x: _this.pdx > dx ? bbox2.x + bbox2.width + 1 : bbox2.x - bbox2.width - 1
+              x: _this.pdx > dx ? bbox2.x + bbox2.width + 1 : bbox2.x - bbox.width - 1
             });
           }
         }
@@ -97,7 +97,7 @@ $(function() {
             });
           } else {
             return _this.attr({
-              y: _this.pdy > dy ? bbox2.y + bbox2.height + 1 : bbox2.y - bbox2.height - 1
+              y: _this.pdy > dy ? bbox2.y + bbox2.height + 1 : bbox2.y - bbox.height - 1
             });
           }
         }
