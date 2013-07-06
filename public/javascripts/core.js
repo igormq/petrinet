@@ -1,5 +1,5 @@
 $(function() {
-  var click, creatingLine, end, getPos, height, in_range, line_collision, move, paper, rectSize, set, start, width;
+  var click, creatingLine, drawingLine, end, from, fromPos, getPos, height, in_range, line_collision, move, paper, rectSize, set, start, width;
   in_range = function(val, start, size) {
     return !(val + size < start || val > start + size);
   };
@@ -119,24 +119,41 @@ $(function() {
     });
   };
   creatingLine = false;
-  click = function() {
-    var fromPos;
-    if (!creatingLine) {
-      fromPos = getPos(this);
-      creatingLine = true;
-    }
-    return paper.path('M100,100L200,200');
+  from = null;
+  fromPos = {
+    x: 0,
+    y: 0
   };
   width = 500;
   height = 500;
   paper = Raphael('canvas', 500, 500);
   set = paper.set();
   rectSize = 50;
-  set.push(paper.rect(100, 100, rectSize, rectSize).attr({
+  drawingLine = paper.path();
+  click = function() {
+    var band, dimensions, x, y;
+    band = paper.path("M 0 0").attr({
+      "stroke-width": 5
+    });
+    band.node.style.pointerEvents = "none";
+    dimensions = this.getBBox();
+    x = dimensions.x + dimensions.width / 2;
+    y = dimensions.y + dimensions.height / 2;
+    if (paper.canvas.onmousemove == null) {
+      return paper.canvas.onmousemove = function(e) {
+        return band.attr({
+          path: "M " + x + " " + y + "L " + e.clientX + " " + e.clientY
+        });
+      };
+    } else {
+      return paper.canvas.onmousemove = null;
+    }
+  };
+  set.push(paper.rect(100, 200, rectSize, rectSize).attr({
     fill: "hsb(0, 0, 0)",
     stroke: "none",
     cursor: "move"
-  }).drag(move, start, end)).click(click);
+  }).drag(move, start, end));
   set.push(paper.circle(50, 100, 20).attr({
     fill: '#f00',
     stroke: "#fff",
@@ -144,10 +161,15 @@ $(function() {
       fichas: 0
     },
     cursor: "pointer"
+  }).drag(move, start, end));
+  set.push(paper.circle(150, 100, 20).attr({
+    fill: '#f00',
+    stroke: "#fff",
+    data: {
+      fichas: 0
+    },
+    cursor: "pointer"
   }).drag(move, start, end)).click(click);
-  paper.canvas.onmousemove = function(e) {
-    return console.log(creatingLine);
-  };
   return $(window).resize(function() {
     return paper.setSize($(window).width(), $(window).height());
   });

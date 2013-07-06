@@ -104,19 +104,16 @@ $ ->
   drawingLine = paper.path()
 
   click = () ->
-    if not creatingLine
-      fromPos = getPos(@)
-      from = @.id
-      creatingLine = true
-    else if (@.id != from)
-      drawingLine.remove()
-      paper.path('M'+fromPos.x+','+fromPos.y+'L'+getPos(@).x+','+getPos(@).y)
-      # @.data('lineto',drawingLine)
-      # from.data('linefrom', drawingLine)
-      creatingLine = false
-    console.log('click')
-    console.log('@'+@.id)
-    console.log('from'+from)
+    band = paper.path("M 0 0").attr({"stroke-width": 5})
+    band.node.style.pointerEvents = "none"
+    dimensions = @getBBox()
+    x = dimensions.x + dimensions.width/2
+    y = dimensions.y + dimensions.height/2
+    if not paper.canvas.onmousemove?
+      paper.canvas.onmousemove = (e) ->
+        band.attr({path: "M " + x + " " + y + "L " + e.clientX + " " + e.clientY})
+    else
+      paper.canvas.onmousemove = null
 
 
   set.push(paper.rect(100, 200, rectSize, rectSize)
@@ -125,7 +122,6 @@ $ ->
        stroke: "none",
        cursor: "move"
     .drag(move, start, end))
-    .click(click)
 
   set.push(paper.circle(50, 100, 20)
     .attr
@@ -135,7 +131,6 @@ $ ->
         fichas: 0
       cursor: "pointer"
     .drag(move, start, end))
-    .click(click)
 
   set.push(paper.circle(150, 100, 20)
     .attr
@@ -147,14 +142,6 @@ $ ->
     .drag(move, start, end))
     .click(click)
 
-
-
-  paper.canvas.onmousemove = (e) ->
-    # console.log(e.clientX)
-    if creatingLine
-      drawingLine.remove()
-      drawingLine = paper.path('M'+fromPos.x+','+fromPos.y+'L'+e.clientX+','+e.clientY)
-    console.log(creatingLine)
 
   $(window).resize () ->
     paper.setSize($(window).width(),$(window).height())
