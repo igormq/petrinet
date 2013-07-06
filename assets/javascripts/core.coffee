@@ -19,6 +19,25 @@ $ ->
     @attr
       cursor: "pointer",
       opacity: 1.0
+    #Pega a nova posição do elemento que foi arrastado
+    bbox = @getBBox()
+    newx = bbox.x + bbox.width/2
+    newy = bbox.y + bbox.height/2
+    #Ajusta a posição das linhas conectadas a este elemento
+    if @.data("linefrom")?
+      @.data("linefrom").forEach (e) =>
+        #Pega a posição do elemento que não se moveu
+        bbox = e.data("elto").getBBox()
+        samex = bbox.x + bbox.width/2
+        samey = bbox.y + bbox.height/2
+        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
+    if @.data("lineto")?
+      @.data("lineto").forEach (e) =>
+        #Pega a posição do elemento que não se moveu
+        bbox = e.data("elfrom").getBBox()
+        samex = bbox.x + bbox.width/2
+        samey = bbox.y + bbox.height/2
+        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
   move = (dx, dy) ->
     bbox = @getBBox()
 
@@ -88,6 +107,7 @@ $ ->
   band = paper.path("M 0 0")
   x = 0
   y = 0
+  oldid = 0
 
   rectSize = 50
 
@@ -97,9 +117,37 @@ $ ->
     dimensions = @getBBox()
     x = dimensions.x + dimensions.width/2
     y = dimensions.y + dimensions.height/2
+    #Está no segundo click?
     if paper.canvas.onmousemove?
-      console.log("Entrei aqui oldx: " + oldx + "oldy: " + oldy)
-      band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
+      #Caso o segundo click seja em um objeto diferente do clicado na primeira vez
+      if @.id != oldid
+        band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
+        band.data('elfrom', paper.getById(oldid))
+        band.data('elto', @)
+        oldtemp = paper.getById(oldid)
+        #Verifica se já existe um set
+        #Se ele existir, adiciona a linha ao set existente
+        if oldtemp.data('linefrom')?
+          console.log("Adicionando linha id#{band.id} no set do obj de saida id#{oldid}")
+          oldtemp.data('linefrom').push(band)
+        #Se o set não existir, cria um set com a linha
+        else
+          console.log("Criando set com a linha id #{band.id} para o obj de saida id #{oldid}")
+          newset = paper.set()
+          newset.push(band)
+          oldtemp.data('linefrom',newset)
+        #Mesma coisa para o elemento de entrada da linha
+        if @.data('lineto')?
+          console.log("Adicionando linha id#{band.id} no set do obj de entrada id#{@.id}")
+          @.data('lineto').push(band)
+        else
+          console.log("Criando set com a linha id #{band.id} para o obj de entrada id #{@.id}")
+          newset = paper.set()
+          newset.push(band)
+          @.data('lineto',newset)
+      #A linha será anulada caso o mesmo objeto seja clicado duas vezes 
+      else
+        band.remove()
     band = paper.path("M 0 0").attr({"stroke-width": 5})
     band.node.style.pointerEvents = "none"
     if not paper.canvas.onmousemove?
@@ -107,6 +155,7 @@ $ ->
         band.attr({path: "M " + x + " " + y + "L " + e.clientX + " " + e.clientY})
     else
       paper.canvas.onmousemove = null
+    oldid = @.id
 
 
   set.push(paper.rect(100, 200, rectSize, rectSize)
