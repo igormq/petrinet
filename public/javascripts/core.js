@@ -21,7 +21,6 @@ $(function() {
   };
   getPos = function(obj) {
     var pos, posX, posY;
-    console.log(obj);
     if (obj.type === 'circle') {
       posX = obj.attr('cx');
       posY = obj.attr('cy');
@@ -124,8 +123,9 @@ $(function() {
     var fromPos;
     if (!creatingLine) {
       fromPos = getPos(this);
-      return creatingLine = true;
+      creatingLine = true;
     }
+    return paper.path('M100,100L200,200');
   };
   width = 500;
   height = 500;
