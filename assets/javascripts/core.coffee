@@ -90,6 +90,7 @@ $ ->
               y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
 
   creatingLine = false
+  fromPos = {x:0,y:0}
   click = () ->
     if not creatingLine
       fromPos = getPos(@)
@@ -126,8 +127,8 @@ $ ->
 
   paper.canvas.onmousemove = (e) ->
     # console.log(e.clientX)
-    # if creatingLine
-    #   drawingLine = paper.path('M'+fromPos.x+','+fromPos.y+'L'+e.clientX+','+e.clientY)
+    if creatingLine
+      drawingLine = paper.path('M'+fromPos.x+','+fromPos.y+'L'+e.clientX+','+e.clientY)
     console.log(creatingLine)
 
   $(window).resize () ->
