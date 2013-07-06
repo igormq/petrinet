@@ -153,7 +153,7 @@ $(function() {
     fill: "hsb(0, 0, 0)",
     stroke: "none",
     cursor: "move"
-  }).drag(move, start, end));
+  }).drag(move, start, end).click(click));
   set.push(paper.circle(50, 100, 20).attr({
     fill: '#f00',
     stroke: "#fff",
@@ -161,7 +161,7 @@ $(function() {
       fichas: 0
     },
     cursor: "pointer"
-  }).drag(move, start, end));
+  }).drag(move, start, end).click(click));
   set.push(paper.circle(150, 100, 20).attr({
     fill: '#f00',
     stroke: "#fff",
@@ -169,7 +169,7 @@ $(function() {
       fichas: 0
     },
     cursor: "pointer"
-  }).drag(move, start, end)).click(click);
+  }).drag(move, start, end).click(click));
   return $(window).resize(function() {
     return paper.setSize($(window).width(), $(window).height());
   });
