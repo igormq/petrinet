@@ -9,16 +9,6 @@ $ ->
 
     !(a.left >= b.right or a.right <= b.left or
            a.top >= b.bottom or a.bottom <= b.top)
-  getPos = (obj)->
-    if obj.type == 'circle'
-      posX = obj.attr('cx')
-      posY = obj.attr('cy')
-    else
-      posX = obj.attr('x') + obj.attr('width')/2
-      posY = obj.attr('y') + obj.attr('height')/2
-    pos = {x: posX, y: posY}
-
-
   start = () ->
     @ox = if @type == 'circle' then @attr("cx") else @attr("x")
     @oy = if @type == 'circle' then @attr("cy") else @attr("y")
@@ -89,26 +79,29 @@ $ ->
             @attr
               y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
 
-  creatingLine = false
-  from = null
-  fromPos = {x:0,y:0}
-
   width = 500
   height = 500
 
   paper = Raphael('canvas', 500, 500)
 
   set = paper.set()
+  band = paper.path("M 0 0")
+  x = 0
+  y = 0
 
   rectSize = 50
-  drawingLine = paper.path()
 
   click = () ->
-    band = paper.path("M 0 0").attr({"stroke-width": 5})
-    band.node.style.pointerEvents = "none"
+    oldx = x
+    oldy = y
     dimensions = @getBBox()
     x = dimensions.x + dimensions.width/2
     y = dimensions.y + dimensions.height/2
+    if paper.canvas.onmousemove?
+      console.log("Entrei aqui oldx: " + oldx + "oldy: " + oldy)
+      band.attr({path: "M " + oldx +" "+ oldy + "L " + x + " " + y})
+    band = paper.path("M 0 0").attr({"stroke-width": 5})
+    band.node.style.pointerEvents = "none"
     if not paper.canvas.onmousemove?
       paper.canvas.onmousemove = (e) ->
         band.attr({path: "M " + x + " " + y + "L " + e.clientX + " " + e.clientY})
