@@ -99,7 +99,7 @@ $ ->
     y = dimensions.y + dimensions.height/2
     if paper.canvas.onmousemove?
       console.log("Entrei aqui oldx: " + oldx + "oldy: " + oldy)
-      band.attr({path: "M " + oldx +" "+ oldy + "L " + x + " " + y})
+      band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
     band = paper.path("M 0 0").attr({"stroke-width": 5})
     band.node.style.pointerEvents = "none"
     if not paper.canvas.onmousemove?

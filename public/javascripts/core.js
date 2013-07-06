@@ -1,5 +1,5 @@
 $(function() {
-  var click, creatingLine, drawingLine, end, from, fromPos, getPos, height, in_range, line_collision, move, paper, rectSize, set, start, width;
+  var band, click, end, height, in_range, line_collision, move, paper, rectSize, set, start, width, x, y;
   in_range = function(val, start, size) {
     return !(val + size < start || val > start + size);
   };
@@ -18,20 +18,6 @@ $(function() {
       right: x2 + width2
     };
     return !(a.left >= b.right || a.right <= b.left || a.top >= b.bottom || a.bottom <= b.top);
-  };
-  getPos = function(obj) {
-    var pos, posX, posY;
-    if (obj.type === 'circle') {
-      posX = obj.attr('cx');
-      posY = obj.attr('cy');
-    } else {
-      posX = obj.attr('x') + obj.attr('width') / 2;
-      posY = obj.attr('y') + obj.attr('height') / 2;
-    }
-    return pos = {
-      x: posX,
-      y: posY
-    };
   };
   start = function() {
     this.ox = this.type === 'circle' ? this.attr("cx") : this.attr("x");
@@ -118,27 +104,31 @@ $(function() {
       }
     });
   };
-  creatingLine = false;
-  from = null;
-  fromPos = {
-    x: 0,
-    y: 0
-  };
   width = 500;
   height = 500;
   paper = Raphael('canvas', 500, 500);
   set = paper.set();
+  band = paper.path("M 0 0");
+  x = 0;
+  y = 0;
   rectSize = 50;
-  drawingLine = paper.path();
   click = function() {
-    var band, dimensions, x, y;
+    var dimensions, oldx, oldy;
+    oldx = x;
+    oldy = y;
+    dimensions = this.getBBox();
+    x = dimensions.x + dimensions.width / 2;
+    y = dimensions.y + dimensions.height / 2;
+    if (paper.canvas.onmousemove != null) {
+      console.log("Entrei aqui oldx: " + oldx + "oldy: " + oldy);
+      band.attr({
+        path: ("M " + oldx + " " + oldy + "L ") + x + " " + y
+      });
+    }
     band = paper.path("M 0 0").attr({
       "stroke-width": 5
     });
     band.node.style.pointerEvents = "none";
-    dimensions = this.getBBox();
-    x = dimensions.x + dimensions.width / 2;
-    y = dimensions.y + dimensions.height / 2;
     if (paper.canvas.onmousemove == null) {
       return paper.canvas.onmousemove = function(e) {
         return band.attr({
