@@ -9,13 +9,13 @@ $ ->
 
     !(a.left >= b.right or a.right <= b.left or
            a.top >= b.bottom or a.bottom <= b.top)
-  getPos = (obj) ->
+  getPos = (obj)->
     if obj.type == 'circle'
       posX = obj.attr('cx')
       posY = obj.attr('cy')
     else
-      posX = obj.attr('x') + @attr('width')/2
-      posY = obj.attr('y') + @attr('height')/2
+      posX = obj.attr('x') + obj.attr('width')/2
+      posY = obj.attr('y') + obj.attr('height')/2
     pos = {x: posX, y: posY}
 
 

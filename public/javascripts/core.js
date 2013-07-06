@@ -1,5 +1,5 @@
 $(function() {
-  var end, height, in_range, line_collision, move, paper, rectSize, set, start, width;
+  var click, creatingLine, end, getPos, height, in_range, line_collision, move, paper, rectSize, set, start, width;
   in_range = function(val, start, size) {
     return !(val + size < start || val > start + size);
   };
@@ -18,6 +18,21 @@ $(function() {
       right: x2 + width2
     };
     return !(a.left >= b.right || a.right <= b.left || a.top >= b.bottom || a.bottom <= b.top);
+  };
+  getPos = function(obj) {
+    var pos, posX, posY;
+    console.log(obj);
+    if (obj.type === 'circle') {
+      posX = obj.attr('cx');
+      posY = obj.attr('cy');
+    } else {
+      posX = obj.attr('x') + obj.attr('width') / 2;
+      posY = obj.attr('y') + obj.attr('height') / 2;
+    }
+    return pos = {
+      x: posX,
+      y: posY
+    };
   };
   start = function() {
     this.ox = this.type === 'circle' ? this.attr("cx") : this.attr("x");
@@ -104,6 +119,14 @@ $(function() {
       }
     });
   };
+  creatingLine = false;
+  click = function() {
+    var fromPos;
+    if (!creatingLine) {
+      fromPos = getPos(this);
+      return creatingLine = true;
+    }
+  };
   width = 500;
   height = 500;
   paper = Raphael('canvas', 500, 500);
@@ -113,7 +136,7 @@ $(function() {
     fill: "hsb(0, 0, 0)",
     stroke: "none",
     cursor: "move"
-  }).drag(move, start, end));
+  }).drag(move, start, end)).click(click);
   set.push(paper.circle(50, 100, 20).attr({
     fill: '#f00',
     stroke: "#fff",
@@ -121,7 +144,10 @@ $(function() {
       fichas: 0
     },
     cursor: "pointer"
-  }).drag(move, start, end));
+  }).drag(move, start, end)).click(click);
+  paper.canvas.onmousemove = function(e) {
+    return console.log(creatingLine);
+  };
   return $(window).resize(function() {
     return paper.setSize($(window).width(), $(window).height());
   });
