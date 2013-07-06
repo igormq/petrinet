@@ -4,11 +4,21 @@ $ ->
     !(val + size < start or val > start + size)
 
   line_collision = (x1, y1, width1, height1, x2, y2, width2, height2) ->
-   a = {top: y1, bottom: y1+height1, left: x1, right: x1+width1}
-   b = {top: y2, bottom: y2+height2, left: x2, right: x2+width2}
+    a = {top: y1, bottom: y1+height1, left: x1, right: x1+width1}
+    b = {top: y2, bottom: y2+height2, left: x2, right: x2+width2}
 
-   !(a.left >= b.right or a.right <= b.left or
+    !(a.left >= b.right or a.right <= b.left or
            a.top >= b.bottom or a.bottom <= b.top)
+  getPos = (obj) ->
+    if obj.type == 'circle'
+      posX = obj.attr('cx')
+      posY = obj.attr('cy')
+    else
+      posX = obj.attr('x') + @attr('width')/2
+      posY = obj.attr('y') + @attr('height')/2
+    pos = {x: posX, y: posY}
+
+
   start = () ->
     @ox = if @type == 'circle' then @attr("cx") else @attr("x")
     @oy = if @type == 'circle' then @attr("cy") else @attr("y")
@@ -79,6 +89,14 @@ $ ->
             @attr
               y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
 
+  creatingLine = false
+  click = () ->
+    if not creatingLine
+      fromPos = getPos(@)
+      creatingLine = true
+    # paper.path('M100,100L200,200')
+
+
   width = 500
   height = 500
 
@@ -94,6 +112,7 @@ $ ->
        stroke: "none",
        cursor: "move"
     .drag(move, start, end))
+    .click(click)
 
   set.push(paper.circle(50, 100, 20)
     .attr
@@ -103,6 +122,13 @@ $ ->
         fichas: 0
       cursor: "pointer"
     .drag(move, start, end))
+    .click(click)
+
+  paper.canvas.onmousemove = (e) ->
+    # console.log(e.clientX)
+    # if creatingLine
+    #   drawingLine = paper.path('M'+fromPos.x+','+fromPos.y+'L'+e.clientX+','+e.clientY)
+    console.log(creatingLine)
 
   $(window).resize () ->
     paper.setSize($(window).width(),$(window).height())
