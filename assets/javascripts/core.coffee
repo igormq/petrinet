@@ -90,13 +90,8 @@ $ ->
               y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
 
   creatingLine = false
+  from = null
   fromPos = {x:0,y:0}
-  click = () ->
-    if not creatingLine
-      fromPos = getPos(@)
-      creatingLine = true
-    # paper.path('M100,100L200,200')
-
 
   width = 500
   height = 500
@@ -106,8 +101,25 @@ $ ->
   set = paper.set()
 
   rectSize = 50
+  drawingLine = paper.path()
 
-  set.push(paper.rect(100, 100, rectSize, rectSize)
+  click = () ->
+    if not creatingLine
+      fromPos = getPos(@)
+      from = @.id
+      creatingLine = true
+    else if (@.id != from)
+      drawingLine.remove()
+      paper.path('M'+fromPos.x+','+fromPos.y+'L'+getPos(@).x+','+getPos(@).y)
+      # @.data('lineto',drawingLine)
+      # from.data('linefrom', drawingLine)
+      creatingLine = false
+    console.log('click')
+    console.log('@'+@.id)
+    console.log('from'+from)
+
+
+  set.push(paper.rect(100, 200, rectSize, rectSize)
     .attr
        fill: "hsb(0, 0, 0)",
        stroke: "none",
@@ -125,9 +137,22 @@ $ ->
     .drag(move, start, end))
     .click(click)
 
+  set.push(paper.circle(150, 100, 20)
+    .attr
+      fill: '#f00',
+      stroke: "#fff",
+      data:
+        fichas: 0
+      cursor: "pointer"
+    .drag(move, start, end))
+    .click(click)
+
+
+
   paper.canvas.onmousemove = (e) ->
     # console.log(e.clientX)
     if creatingLine
+      drawingLine.remove()
       drawingLine = paper.path('M'+fromPos.x+','+fromPos.y+'L'+e.clientX+','+e.clientY)
     console.log(creatingLine)
 
