@@ -7,11 +7,11 @@ $ ->
     a = {top: y1, bottom: y1+height1, left: x1, right: x1+width1}
     b = {top: y2, bottom: y2+height2, left: x2, right: x2+width2}
 
-    !(a.left >= b.right or a.right <= b.left or
-           a.top >= b.bottom or a.bottom <= b.top)
+    not (a.left >= b.right or a.right <= b.left or a.top >= b.bottom or a.bottom <= b.top)
+
   start = () ->
-    @ox = if @type == 'circle' then @attr("cx") else @attr("x")
-    @oy = if @type == 'circle' then @attr("cy") else @attr("y")
+    @ox = @attr("x")
+    @oy = @attr("y")
     @attr
       cursor: "move",
       opacity: .5
@@ -27,13 +27,10 @@ $ ->
       if e.id != @id
         bbox2 = e.getBBox()
         # keeps Circle in boarder
+
         x = @ox + dx
 
         y = @oy + dy
-
-        if @type == 'circle'
-          x = x - @attr('r')
-          y = y - @attr('r')
 
         x = if x < 0 then 0 else (if x > width - bbox.width then width - bbox.width else x)
 
@@ -43,57 +40,41 @@ $ ->
         #collision system
         if not line_collision(bbox2.x, bbox2.y, bbox2.width, bbox2.height, x, bbox.y, bbox.width, bbox.height)
           if (@stuckx and ( not in_range(y, bbox2.y, bbox2.height) or Math.abs(x - bbox.x) < bbox.width)) or not @stuckx
-            if @type == 'circle'
-              @attr
-                cx: x + @attr('r')
-            else
-              @attr
-                x: x
+            @attr
+              x: x
 
             @pdx = dx
             @stuckx = false
         else
           @stuckx = true
-          if @type == 'circle'
-            @attr
-              cx: if @pdx > dx then bbox2.x + bbox2.width + 1 + @attr('r') else bbox2.x - 1 - @attr('r')
-          else
-            @attr
-              x: if @pdx > dx then bbox2.x + bbox2.width + 1 else bbox2.x - bbox.width - 1
+          @attr
+            x: if @pdx > dx then bbox2.x + bbox2.width + 1 else bbox2.x - bbox.width - 1
 
         if not line_collision(bbox2.x, bbox2.y, bbox2.width, bbox2.height, bbox.x, y, bbox.width, bbox.height)
           if ((@stucky and ( not in_range(x, bbox2.x, bbox2.width) or Math.abs(y - bbox.y) < bbox.height) ) or not @stucky )
-            if @type == 'circle'
-              @attr
-                cy: y + @attr('r')
-            else
-              @attr
-                y: y
+            @attr
+              y: y
             @pdy = dy
             @stucky = false
         else
           @stucky = true
-          if @type == 'circle'
-            @attr
-              cy: if @pdy > dy then bbox2.y + bbox2.height + 1 + @attr('r') else bbox2.y - 1 - @attr('r')
-          else
-            @attr
-              y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
+          @attr
+            y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
     # --> Atualiza a posição das linhas conforme o elemento é arrastado <--
     #Pega a nova posição do elemento que foi arrastado
     bbox = @getBBox()
     newx = bbox.x + bbox.width/2
     newy = bbox.y + bbox.height/2
     #Ajusta a posição das linhas conectadas a este elemento
-    if @.data("linefrom")?
-      @.data("linefrom").forEach (e) =>
+    if @data("linefrom")?
+      @data("linefrom").forEach (e) =>
         #Pega a posição do elemento que não se moveu
         bbox = e.data("elto").getBBox()
         samex = bbox.x + bbox.width/2
         samey = bbox.y + bbox.height/2
         e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
-    if @.data("lineto")?
-      @.data("lineto").forEach (e) =>
+    if @data("lineto")?
+      @data("lineto").forEach (e) =>
         #Pega a posição do elemento que não se moveu
         bbox = e.data("elfrom").getBBox()
         samex = bbox.x + bbox.width/2
@@ -104,6 +85,16 @@ $ ->
   height = 500
 
   paper = Raphael('canvas', 500, 500)
+  paper.ca.x = (num = null) ->
+    if @type == 'circle'
+      cx: num + @attr('r')
+    else
+      x: num
+  paper.ca.y = (num) ->
+    if @type == 'circle'
+      cy: num + @attr('r')
+    else
+      y: num
 
   set = paper.set()
   band = paper.path("M 0 0")
@@ -114,7 +105,7 @@ $ ->
   rectSize = 50
 
   click = () ->
-    if @ox != (if @type == 'circle' then @attr("cx") else @attr("x")) and @oy != (if @type == 'circle' then @attr("cy") else @attr("y"))
+    if @ox != @attr("x") and @oy != @attr("y")
       return false
     oldx = x
     oldy = y
@@ -124,8 +115,8 @@ $ ->
     #Está no segundo click?
     if paper.canvas.onmousemove?
       #Caso o segundo click seja em um objeto diferente do clicado na primeira vez
-      if @.id != oldid
-        band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
+      if @id != oldid
+        band.attr({path: "M #{oldx} #{oldy}L #{x} #{y}"})
         band.data('elfrom', paper.getById(oldid))
         band.data('elto', @)
         oldtemp = paper.getById(oldid)
@@ -141,14 +132,14 @@ $ ->
           newset.push(band)
           oldtemp.data('linefrom',newset)
         #Mesma coisa para o elemento de entrada da linha
-        if @.data('lineto')?
-          console.log("Adicionando linha id#{band.id} no set do obj de entrada id#{@.id}")
-          @.data('lineto').push(band)
+        if @data('lineto')?
+          console.log("Adicionando linha id#{band.id} no set do obj de entrada id#{@id}")
+          @data('lineto').push(band)
         else
-          console.log("Criando set com a linha id #{band.id} para o obj de entrada id #{@.id}")
+          console.log("Criando set com a linha id #{band.id} para o obj de entrada id #{@id}")
           newset = paper.set()
           newset.push(band)
-          @.data('lineto',newset)
+          @data('lineto',newset)
       #A linha será anulada caso o mesmo objeto seja clicado duas vezes
       else
         band.remove()
@@ -156,10 +147,10 @@ $ ->
     band.node.style.pointerEvents = "none"
     if not paper.canvas.onmousemove?
       paper.canvas.onmousemove = (e) ->
-        band.attr({path: "M " + x + " " + y + "L " + e.clientX + " " + e.clientY})
+        band.attr({path: "M #{x} #{y}L #{e.clientX} #{e.clientY}"})
     else
       paper.canvas.onmousemove = null
-    oldid = @.id
+    oldid = @id
 
 
   set.push(paper.rect(100, 200, rectSize, rectSize)
@@ -173,6 +164,8 @@ $ ->
 
   set.push(paper.circle(50, 100, 20)
     .attr
+      x: 30,
+      y: 80,
       fill: '#f00',
       stroke: "#fff",
       data:
@@ -183,6 +176,8 @@ $ ->
   )
   set.push(paper.circle(150, 100, 20)
     .attr
+      x: 130,
+      y: 80,
       fill: '#f00',
       stroke: "#fff",
       data:
