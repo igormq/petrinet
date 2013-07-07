@@ -189,37 +189,39 @@ $ ->
     if not paper.canvas.onmousemove?
       paper.canvas.onmousemove = (e) ->
         band.attr({path: "M #{x} #{y}L #{e.clientX} #{e.clientY}"})
+      @undrag()
     else
       paper.canvas.onmousemove = null
+      paper.getById(oldid).drag(move, start, end)
     oldid = @id
 
 
-  objetos.push(paper.circle(50, 100, 20)
-    .attr
-      x: 30,
-      y: 80,
-      fill: '#f00',
-      stroke: "none",
-      data:
-        fichas: 0
-      cursor: "pointer"
-    .drag(move, start, end)
-    .click(click)
-    .dblclick(dblclick)
-  )
-  objetos.push(paper.circle(150, 100, 20)
-    .attr
-      x: 130,
-      y: 80,
-      fill: '#0f0',
-      stroke: "none",
-      data:
-        fichas: '0'
-      cursor: "pointer"
-    .drag(move, start, end)
-    .click(click)
-    .dblclick(dblclick)
-  )
+  # objetos.push(paper.circle(50, 100, 20)
+  #   .attr
+  #     x: 30,
+  #     y: 80,
+  #     fill: '#f00',
+  #     stroke: "none",
+  #     data:
+  #       fichas: 0
+  #     cursor: "pointer"
+  #   .drag(move, start, end)
+  #   .click(click)
+  #   .dblclick(dblclick)
+  # )
+  # objetos.push(paper.circle(150, 100, 20)
+  #   .attr
+  #     x: 130,
+  #     y: 80,
+  #     fill: '#0f0',
+  #     stroke: "none",
+  #     data:
+  #       fichas: '0'
+  #     cursor: "pointer"
+  #   .drag(move, start, end)
+  #   .click(click)
+  #   .dblclick(dblclick)
+  # )
 
   objetos.push(paper.rect(100, 200, rectSize, rectSize)
     .attr
@@ -229,14 +231,14 @@ $ ->
     .drag(move, start, end)
     .click(click)
   )
-  objetos.push(paper.rect(200, 200, rectSize, rectSize)
-    .attr
-       fill: "#00f",
-       stroke: "none",
-       cursor: "move"
-    .drag(move, start, end)
-    .click(click)
-  )
+  # objetos.push(paper.rect(200, 200, rectSize, rectSize)
+  #   .attr
+  #      fill: "#00f",
+  #      stroke: "none",
+  #      cursor: "move"
+  #   .drag(move, start, end)
+  #   .click(click)
+  # )
 
 
   $(window).resize () ->
@@ -274,7 +276,7 @@ $ ->
       .attr
         x: +$(@).parent().data('x') - 20,
         y: +$(@).parent().data('y') - 20,
-        fill: '#f00',
+        fill: '#12394d',
         stroke: "none",
         data:
           fichas: '0'
@@ -284,9 +286,9 @@ $ ->
       .dblclick(dblclick)
       )
     else if $(@).hasClass('transicao')
-      objetos.push(paper.rect(+$(@).parent().data('x'), +$(@).parent().data('y'), rectSize, rectSize)
+      objetos.push(paper.rect(+$(@).parent().data('x'), +$(@).parent().data('y'), rectSize, rectSize/3)
         .attr
-           fill: "#00f",
+           fill: "#000",
            stroke: "none",
            cursor: "move"
         .drag(move, start, end)
