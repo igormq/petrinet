@@ -114,6 +114,8 @@ $ ->
   rectSize = 50
 
   click = () ->
+    if @ox != (if @type == 'circle' then @attr("cx") else @attr("x")) and @oy != (if @type == 'circle' then @attr("cy") else @attr("y"))
+      return false
     oldx = x
     oldy = y
     dimensions = @getBBox()
@@ -147,7 +149,7 @@ $ ->
           newset = paper.set()
           newset.push(band)
           @.data('lineto',newset)
-      #A linha será anulada caso o mesmo objeto seja clicado duas vezes 
+      #A linha será anulada caso o mesmo objeto seja clicado duas vezes
       else
         band.remove()
     band = paper.path("M 0 0").attr({"stroke-width": 5})

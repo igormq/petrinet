@@ -1,5 +1,5 @@
 $(function() {
-  var band, click, end, height, in_range, line_collision, move, paper, rectSize, set, start, width, x, y;
+  var band, click, end, height, in_range, line_collision, move, oldid, paper, rectSize, set, start, width, x, y;
   in_range = function(val, start, size) {
     return !(val + size < start || val > start + size);
   };
@@ -34,10 +34,10 @@ $(function() {
     });
   };
   move = function(dx, dy) {
-    var bbox,
+    var bbox, newx, newy,
       _this = this;
     bbox = this.getBBox();
-    return set.forEach(function(e) {
+    set.forEach(function(e) {
       var bbox2, x, y;
       if (e.id !== _this.id) {
         bbox2 = e.getBBox();
@@ -103,6 +103,31 @@ $(function() {
         }
       }
     });
+    bbox = this.getBBox();
+    newx = bbox.x + bbox.width / 2;
+    newy = bbox.y + bbox.height / 2;
+    if (this.data("linefrom") != null) {
+      this.data("linefrom").forEach(function(e) {
+        var samex, samey;
+        bbox = e.data("elto").getBBox();
+        samex = bbox.x + bbox.width / 2;
+        samey = bbox.y + bbox.height / 2;
+        return e.attr({
+          path: "M " + newx + " " + newy + " L " + samex + " " + samey
+        });
+      });
+    }
+    if (this.data("lineto") != null) {
+      return this.data("lineto").forEach(function(e) {
+        var samex, samey;
+        bbox = e.data("elfrom").getBBox();
+        samex = bbox.x + bbox.width / 2;
+        samey = bbox.y + bbox.height / 2;
+        return e.attr({
+          path: "M " + newx + " " + newy + " L " + samex + " " + samey
+        });
+      });
+    }
   };
   width = 500;
   height = 500;
@@ -111,33 +136,63 @@ $(function() {
   band = paper.path("M 0 0");
   x = 0;
   y = 0;
+  oldid = 0;
   rectSize = 50;
   click = function() {
-    var dimensions, oldx, oldy;
+    var dimensions, newset, oldtemp, oldx, oldy;
+    if (this.ox !== (this.type === 'circle' ? this.attr("cx") : this.attr("x")) && this.oy !== (this.type === 'circle' ? this.attr("cy") : this.attr("y"))) {
+      return false;
+    }
+    console.log('click');
     oldx = x;
     oldy = y;
     dimensions = this.getBBox();
     x = dimensions.x + dimensions.width / 2;
     y = dimensions.y + dimensions.height / 2;
     if (paper.canvas.onmousemove != null) {
-      console.log("Entrei aqui oldx: " + oldx + "oldy: " + oldy);
-      band.attr({
-        path: ("M " + oldx + " " + oldy + "L ") + x + " " + y
-      });
+      if (this.id !== oldid) {
+        band.attr({
+          path: ("M " + oldx + " " + oldy + "L ") + x + " " + y
+        });
+        band.data('elfrom', paper.getById(oldid));
+        band.data('elto', this);
+        oldtemp = paper.getById(oldid);
+        if (oldtemp.data('linefrom') != null) {
+          console.log("Adicionando linha id" + band.id + " no set do obj de saida id" + oldid);
+          oldtemp.data('linefrom').push(band);
+        } else {
+          console.log("Criando set com a linha id " + band.id + " para o obj de saida id " + oldid);
+          newset = paper.set();
+          newset.push(band);
+          oldtemp.data('linefrom', newset);
+        }
+        if (this.data('lineto') != null) {
+          console.log("Adicionando linha id" + band.id + " no set do obj de entrada id" + this.id);
+          this.data('lineto').push(band);
+        } else {
+          console.log("Criando set com a linha id " + band.id + " para o obj de entrada id " + this.id);
+          newset = paper.set();
+          newset.push(band);
+          this.data('lineto', newset);
+        }
+      } else {
+        band.remove();
+      }
     }
     band = paper.path("M 0 0").attr({
       "stroke-width": 5
     });
     band.node.style.pointerEvents = "none";
     if (paper.canvas.onmousemove == null) {
-      return paper.canvas.onmousemove = function(e) {
+      paper.canvas.onmousemove = function(e) {
         return band.attr({
           path: "M " + x + " " + y + "L " + e.clientX + " " + e.clientY
         });
       };
     } else {
-      return paper.canvas.onmousemove = null;
+      paper.canvas.onmousemove = null;
     }
+    return oldid = this.id;
   };
   set.push(paper.rect(100, 200, rectSize, rectSize).attr({
     fill: "hsb(0, 0, 0)",
