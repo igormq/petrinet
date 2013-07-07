@@ -124,7 +124,6 @@ $ ->
       #Caso o segundo click seja em um objeto diferente do clicado na primeira vez
       if @.id != oldid
         band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
-        band.toBack() #Linha deve ficar atrás dos outros elementos
         #De onde a linha vem
         band.data('elfrom', paper.getById(oldid))
         #Para onde a linha vai
@@ -154,6 +153,7 @@ $ ->
       else
         band.remove()
     band = paper.path("M 0 0").attr({"stroke-width": 5})
+    band.toBack() #Linha deve ficar atrás dos outros elementos
     band.node.style.pointerEvents = "none"
     if not paper.canvas.onmousemove?
       paper.canvas.onmousemove = (e) ->
@@ -162,10 +162,9 @@ $ ->
       paper.canvas.onmousemove = null
     oldid = @.id
 
-
   set.push(paper.rect(100, 200, rectSize, rectSize)
     .attr
-       fill: "#0f0",
+       fill: "#00f",
        stroke: "none",
        cursor: "move"
     .drag(move, start, end)
