@@ -27,6 +27,7 @@ $ ->
       if e.id != @id
         bbox2 = e.getBBox()
         # keeps Circle in boarder
+        console.log([bbox, bbox2])
 
         x = @ox + dx
 
@@ -46,6 +47,7 @@ $ ->
             @pdx = dx
             @stuckx = false
         else
+          console.log('colidiu x')
           @stuckx = true
           @attr
             x: if @pdx > dx then bbox2.x + bbox2.width + 1 else bbox2.x - bbox.width - 1
@@ -198,6 +200,8 @@ $ ->
   )
   set.push(paper.circle(150, 100, 20)
     .attr
+      x: 130,
+      y: 80,
       fill: '#0f0',
       stroke: "none",
       data:
