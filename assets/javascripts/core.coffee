@@ -137,37 +137,49 @@ $ ->
     #Está no segundo click?
     if paper.canvas.onmousemove?
       #Caso o segundo click seja em um objeto diferente do clicado na primeira vez
-      if @id != oldid
-        ang = 360 - Raphael.angle(x,y,oldx,oldy) #Acerta o ângulo para começar em 0 a partir do eixo X
-        ang = ang * Math.PI / 180 #Conversão para radianos
-        finalX = x - dimensions.width*Math.cos(ang)/2
-        finalY = y + dimensions.height*Math.sin(ang)/2
-        band.attr({path: "M #{oldx} #{oldy}L #{finalX} #{finalY}"})
-        #De onde a linha vem
-        band.data('elfrom', paper.getById(oldid))
-        #Para onde a linha vai
-        band.data('elto', @)
-        oldtemp = paper.getById(oldid)
-        #Verifica se já existe um set
-        #Se ele existir, adiciona a linha ao set existente
-        if oldtemp.data('linefrom')?
-          console.log("Adicionando linha id#{band.id} no set do obj de saida id#{oldid}")
-          oldtemp.data('linefrom').push(band)
-        #Se o set não existir, cria um set com a linha
-        else
-          console.log("Criando set com a linha id #{band.id} para o obj de saida id #{oldid}")
-          newset = paper.set()
-          newset.push(band)
-          oldtemp.data('linefrom',newset)
-        #Mesma coisa para o elemento de entrada da linha
+      if (@id != oldid) && (@type != paper.getById(oldid).type)
+        connected = false
         if @data('lineto')?
-          console.log("Adicionando linha id#{band.id} no set do obj de entrada id#{@id}")
-          @data('lineto').push(band)
+          @data('lineto').forEach (e) =>
+            if e.data("elfrom").id == oldid
+              connected = true
+        console.log("connected is #{connected}")
+        if !connected
+          console.log(@type)
+          console.log(paper.getById(oldid).type)
+          console.log(@type != paper.getById(oldid).type)
+          ang = 360 - Raphael.angle(x,y,oldx,oldy) #Acerta o ângulo para começar em 0 a partir do eixo X
+          ang = ang * Math.PI / 180 #Conversão para radianos
+          finalX = x - dimensions.width*Math.cos(ang)/2
+          finalY = y + dimensions.height*Math.sin(ang)/2
+          band.attr({path: "M #{oldx} #{oldy}L #{finalX} #{finalY}"})
+          #De onde a linha vem
+          band.data('elfrom', paper.getById(oldid))
+          #Para onde a linha vai
+          band.data('elto', @)
+          oldtemp = paper.getById(oldid)
+          #Verifica se já existe um set
+          #Se ele existir, adiciona a linha ao set existente
+          if oldtemp.data('linefrom')?
+            console.log("Adicionando linha id#{band.id} no set do obj de saida id#{oldid}")
+            oldtemp.data('linefrom').push(band)
+          #Se o set não existir, cria um set com a linha
+          else
+            console.log("Criando set com a linha id #{band.id} para o obj de saida id #{oldid}")
+            newset = paper.set()
+            newset.push(band)
+            oldtemp.data('linefrom',newset)
+          #Mesma coisa para o elemento de entrada da linha
+          if @data('lineto')?
+            console.log("Adicionando linha id#{band.id} no set do obj de entrada id#{@id}")
+            @data('lineto').push(band)
+          else
+            console.log("Criando set com a linha id #{band.id} para o obj de entrada id #{@id}")
+            newset = paper.set()
+            newset.push(band)
+            @data('lineto',newset)
         else
-          console.log("Criando set com a linha id #{band.id} para o obj de entrada id #{@id}")
-          newset = paper.set()
-          newset.push(band)
-          @data('lineto',newset)
+          band.remove() #A linha será excluída caso já exista outra que faça a mesma conexão
       #A linha será anulada caso o mesmo objeto seja clicado duas vezes
       else
         band.remove()
