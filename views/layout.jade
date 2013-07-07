@@ -2,10 +2,22 @@ doctype 5
 html
   head
     title= title
+    link(rel='stylesheet', href='lib/stylesheets/bootstrap.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='lib/javascripts/jquery-1.10.1.js')
+    script(src='lib/javascripts/bootstrap.js')
     script(src='lib/javascripts/raphael-min.js')
     script(src='lib/javascripts/underscore.min.js')
     script(src='javascripts/core.js')
   body
     block content
+    .btn-group.menu
+        button.btn.lugar Lugar
+        button.btn.transicao Transicao
+    .modal.editar-atributos
+        .modal-body
+            fieldset
+                legend Editar Lugar
+                label Número de Fichas
+                input.fichas(type='text', placeholder='Digite a qtd. de fichas')
+                button.btn.btn-primary(type='submit') Salvar

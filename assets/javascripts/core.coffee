@@ -71,8 +71,8 @@ $ ->
     # --> Atualiza a posição das linhas conforme o elemento é arrastado <--
     #Pega a nova posição do elemento que foi arrastado
     bbox = @getBBox()
-    newx = bbox.x + bbox.width/2
-    newy = bbox.y + bbox.height/2
+    newx = bbox.x + bbox.width / 2
+    newy = bbox.y + bbox.height / 2
     #Ajusta a posição das linhas conectadas a este elemento
     if @data("linefrom")?
       @data("linefrom").forEach (e) =>
@@ -118,7 +118,15 @@ $ ->
 
   rectSize = 50
 
+  dblclick = () ->
+    $('.editar-atributos').show()
+    $(".editar-atributos input[type='text'].fichas").val(@data('fichas'))
+    $('.editar-atributos').css 'top', "#{@attr('cy')}px"
+    $('.editar-atributos').css 'left', "#{@attr('cx')}px"
+    $('.editar-atributos').data 'element-id', "#{@id}"
   click = () ->
+    $('.menu').hide()
+    $('.editar-atributos').hide()
     if @ox != @attr("x") and @oy != @attr("y")
       return false
     oldx = x
@@ -185,6 +193,7 @@ $ ->
       cursor: "pointer"
     .drag(move, start, end)
     .click(click)
+    .dblclick(dblclick)
   )
   objetos.push(paper.circle(150, 100, 20)
     .attr
@@ -193,10 +202,11 @@ $ ->
       fill: '#0f0',
       stroke: "none",
       data:
-        fichas: 0
+        fichas: '0'
       cursor: "pointer"
     .drag(move, start, end)
     .click(click)
+    .dblclick(dblclick)
   )
 
   objetos.push(paper.rect(100, 200, rectSize, rectSize)
@@ -219,3 +229,59 @@ $ ->
 
   $(window).resize () ->
     paper.setSize($(window).width(),$(window).height())
+
+  paper.canvas.onclick = (e) ->
+    if $('.editar-atributos').is ':visible'
+      $('.editar-atributos').hide()
+    else if not paper.canvas.onmousemove?
+      if $('.editar-atributos').is ':visible'
+        $('.editar-atributos').hide()
+      else
+        element = paper.getElementByPoint(e.clientX, e.clientY)
+        if  element == null
+          if $('.menu').is ':visible'
+            $('.menu').hide()
+          else
+            $('.menu').show()
+            $('.menu').css 'top', "#{e.clientY}px"
+            $('.menu').css 'left', "#{e.clientX}px"
+            $('.menu').data 'x', "#{e.clientX}"
+            $('.menu').data 'y', "#{e.clientY}"
+
+
+  #previnir o click com o botao direito
+  $(paper.canvas).bind "contextmenu", (e) ->
+    $('.menu').hide()
+    $('.editar-atributos').hide()
+    e.preventDefault()
+
+
+  $('.menu .btn').click () ->
+    if $(@).hasClass('lugar')
+      objetos.push(paper.circle(+$(@).parent().data('x'), +$(@).parent().data('y'), 20)
+      .attr
+        x: +$(@).parent().data('x') - 20,
+        y: +$(@).parent().data('y') - 20,
+        fill: '#f00',
+        stroke: "none",
+        data:
+          fichas: '0'
+        cursor: "pointer"
+      .drag(move, start, end)
+      .click(click)
+      .dblclick(dblclick)
+      )
+    else if $(@).hasClass('transicao')
+      objetos.push(paper.rect(+$(@).parent().data('x'), +$(@).parent().data('y'), rectSize, rectSize)
+        .attr
+           fill: "#00f",
+           stroke: "none",
+           cursor: "move"
+        .drag(move, start, end)
+        .click(click)
+      )
+    $(@).parent().hide()
+  $('.editar-atributos button[type="submit"]').click () ->
+    element = paper.getById $('.editar-atributos').data('element-id')
+    element.data('fichas', $('.editar-atributos .fichas').val())
+    $('.editar-atributos').hide()

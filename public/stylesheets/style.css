@@ -11,3 +11,15 @@ body canvas#processing {
 a {
   color: #00b7fd;
 }
+.btn-group.menu {
+  position: absolute;
+  display: none;
+}
+.editar-atributos {
+  width: 250px;
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 0;
+  margin-left: 0;
+}
