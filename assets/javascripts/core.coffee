@@ -88,17 +88,25 @@ $ ->
     if @.data("linefrom")?
       @.data("linefrom").forEach (e) =>
         #Pega a posição do elemento que não se moveu
-        bbox = e.data("elto").getBBox()
-        samex = bbox.x + bbox.width/2
-        samey = bbox.y + bbox.height/2
-        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
+        bbox2 = e.data("elto").getBBox()
+        samex = bbox2.x + bbox2.width/2
+        samey = bbox2.y + bbox2.height/2
+        ang = 360 - Raphael.angle(samex,samey,newx,newy) #Acerta o ângulo para começar em 0 a partir do eixo X
+        ang = ang * Math.PI / 180 #Conversão para radianos
+        finalX = samex - bbox2.width*Math.cos(ang)/2
+        finalY = samey + bbox2.height*Math.sin(ang)/2
+        e.attr({path: "M #{newx} #{newy} L #{finalX} #{finalY}"})
     if @.data("lineto")?
       @.data("lineto").forEach (e) =>
         #Pega a posição do elemento que não se moveu
-        bbox = e.data("elfrom").getBBox()
-        samex = bbox.x + bbox.width/2
-        samey = bbox.y + bbox.height/2
-        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
+        bbox2 = e.data("elfrom").getBBox()
+        samex = bbox2.x + bbox2.width/2
+        samey = bbox2.y + bbox2.height/2
+        ang = 360 - Raphael.angle(newx,newy,samex,samey) #Acerta o ângulo para começar em 0 a partir do eixo X
+        ang = ang * Math.PI / 180 #Conversão para radianos
+        finalX = newx - bbox.width*Math.cos(ang)/2
+        finalY = newy + bbox.height*Math.sin(ang)/2
+        e.attr({path: "M #{samex} #{samey} L #{finalX} #{finalY}"})
 
   width = 500
   height = 500
@@ -123,7 +131,11 @@ $ ->
     if paper.canvas.onmousemove?
       #Caso o segundo click seja em um objeto diferente do clicado na primeira vez
       if @.id != oldid
-        band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
+        ang = 360 - Raphael.angle(x,y,oldx,oldy) #Acerta o ângulo para começar em 0 a partir do eixo X
+        ang = ang * Math.PI / 180 #Conversão para radianos
+        finalX = x - dimensions.width*Math.cos(ang)/2
+        finalY = y + dimensions.height*Math.sin(ang)/2
+        band.attr({path: "M #{oldx} #{oldy}L " + finalX + " " + finalY})
         #De onde a linha vem
         band.data('elfrom', paper.getById(oldid))
         #Para onde a linha vai
@@ -152,7 +164,7 @@ $ ->
       #A linha será anulada caso o mesmo objeto seja clicado duas vezes 
       else
         band.remove()
-    band = paper.path("M 0 0").attr({"stroke-width": 5})
+    band = paper.path("M 0 0").attr({"stroke-width": 5, "arrow-end": "block-narrow-short"})
     band.toBack() #Linha deve ficar atrás dos outros elementos
     band.node.style.pointerEvents = "none"
     if not paper.canvas.onmousemove?
@@ -163,6 +175,14 @@ $ ->
     oldid = @.id
 
   set.push(paper.rect(100, 200, rectSize, rectSize)
+    .attr
+       fill: "#00f",
+       stroke: "none",
+       cursor: "move"
+    .drag(move, start, end)
+    .click(click)
+  )
+  set.push(paper.rect(200, 200, rectSize, rectSize)
     .attr
        fill: "#00f",
        stroke: "none",
@@ -183,7 +203,7 @@ $ ->
   )
   set.push(paper.circle(150, 100, 20)
     .attr
-      fill: '#f00',
+      fill: '#0f0',
       stroke: "none",
       data:
         fichas: 0
