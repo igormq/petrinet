@@ -19,25 +19,7 @@ $ ->
     @attr
       cursor: "pointer",
       opacity: 1.0
-    #Pega a nova posição do elemento que foi arrastado
-    bbox = @getBBox()
-    newx = bbox.x + bbox.width/2
-    newy = bbox.y + bbox.height/2
-    #Ajusta a posição das linhas conectadas a este elemento
-    if @.data("linefrom")?
-      @.data("linefrom").forEach (e) =>
-        #Pega a posição do elemento que não se moveu
-        bbox = e.data("elto").getBBox()
-        samex = bbox.x + bbox.width/2
-        samey = bbox.y + bbox.height/2
-        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
-    if @.data("lineto")?
-      @.data("lineto").forEach (e) =>
-        #Pega a posição do elemento que não se moveu
-        bbox = e.data("elfrom").getBBox()
-        samex = bbox.x + bbox.width/2
-        samey = bbox.y + bbox.height/2
-        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
+
   move = (dx, dy) ->
     bbox = @getBBox()
 
@@ -97,6 +79,26 @@ $ ->
           else
             @attr
               y: if @pdy > dy then bbox2.y + bbox2.height + 1 else bbox2.y - bbox.height - 1
+    # --> Atualiza a posição das linhas conforme o elemento é arrastado <--
+    #Pega a nova posição do elemento que foi arrastado
+    bbox = @getBBox()
+    newx = bbox.x + bbox.width/2
+    newy = bbox.y + bbox.height/2
+    #Ajusta a posição das linhas conectadas a este elemento
+    if @.data("linefrom")?
+      @.data("linefrom").forEach (e) =>
+        #Pega a posição do elemento que não se moveu
+        bbox = e.data("elto").getBBox()
+        samex = bbox.x + bbox.width/2
+        samey = bbox.y + bbox.height/2
+        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
+    if @.data("lineto")?
+      @.data("lineto").forEach (e) =>
+        #Pega a posição do elemento que não se moveu
+        bbox = e.data("elfrom").getBBox()
+        samex = bbox.x + bbox.width/2
+        samey = bbox.y + bbox.height/2
+        e.attr({path: "M #{newx} #{newy} L #{samex} #{samey}"})
 
   width = 500
   height = 500
