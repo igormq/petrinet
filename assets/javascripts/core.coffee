@@ -124,7 +124,10 @@ $ ->
       #Caso o segundo click seja em um objeto diferente do clicado na primeira vez
       if @.id != oldid
         band.attr({path: "M #{oldx} #{oldy}L " + x + " " + y})
+        band.toBack() #Linha deve ficar atrás dos outros elementos
+        #De onde a linha vem
         band.data('elfrom', paper.getById(oldid))
+        #Para onde a linha vai
         band.data('elto', @)
         oldtemp = paper.getById(oldid)
         #Verifica se já existe um set
@@ -162,7 +165,7 @@ $ ->
 
   set.push(paper.rect(100, 200, rectSize, rectSize)
     .attr
-       fill: "hsb(0, 0, 0)",
+       fill: "#0f0",
        stroke: "none",
        cursor: "move"
     .drag(move, start, end)
@@ -172,7 +175,7 @@ $ ->
   set.push(paper.circle(50, 100, 20)
     .attr
       fill: '#f00',
-      stroke: "#fff",
+      stroke: "none",
       data:
         fichas: 0
       cursor: "pointer"
@@ -182,7 +185,7 @@ $ ->
   set.push(paper.circle(150, 100, 20)
     .attr
       fill: '#f00',
-      stroke: "#fff",
+      stroke: "none",
       data:
         fichas: 0
       cursor: "pointer"
