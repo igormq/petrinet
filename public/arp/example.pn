@@ -1,0 +1,28 @@
+Net Dinning Philosophers ;
+{      
+  This Petri net models the Dinning Philosophers synchronization
+  problem.
+}
+Nodes
+   Ph1_Thinking,Ph2_Thinking,Ph3_Thinking,
+   Ph4_Thinking,Ph5_Thinking, Stick_1,
+   Stick_2,Stick_3,Stick_4,Stick_5         : Place (1)  ;
+   Ph1_Eating,Ph2_Eating,Ph3_Eating,
+   Ph4_Eating,Ph5_Eating                   : Place ;
+
+   Ph1_Eat,Ph2_Eat,Ph3_Eat,Ph4_Eat,Ph5_Eat,
+   Ph1_Think,Ph2_Think,Ph3_Think,Ph4_Think,Ph5_Think : Transition ;
+
+Structure
+   Ph1_Eat : (Ph1_Thinking,Stick_1,Stick_2) , (Ph1_Eating) ;
+   Ph2_Eat : (Ph2_Thinking,Stick_2,Stick_3) , (Ph2_Eating) ;
+   Ph3_Eat : (Ph3_Thinking,Stick_3,Stick_4) , (Ph3_Eating) ;
+   Ph4_Eat : (Ph4_Thinking,Stick_4,Stick_5) , (Ph4_Eating) ;
+   Ph5_Eat : (Ph5_Thinking,Stick_5,Stick_1) , (Ph5_Eating) ;
+
+   Ph1_Think : (Ph1_Eating),(Ph1_Thinking,Stick_1,Stick_2) ;
+   Ph2_Think : (Ph2_Eating),(Ph2_Thinking,Stick_2,Stick_3) ;
+   Ph3_Think : (Ph3_Eating),(Ph3_Thinking,Stick_3,Stick_4) ;
+   Ph4_Think : (Ph4_Eating),(Ph4_Thinking,Stick_4,Stick_5) ;
+   Ph5_Think : (Ph5_Eating),(Ph5_Thinking,Stick_5,Stick_1) ;
+endNet.
