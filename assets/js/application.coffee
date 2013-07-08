@@ -1,3 +1,4 @@
+#= require tradutor-arp
 #= require lugar
 #= require transicao
 #= require core
