@@ -78,3 +78,20 @@
   window.oldid = @id
   window.oldx = x
   window.oldy = y
+
+@deleteEl = (mouse) ->
+  console.log("mouse.which is #{mouse.which}")
+  if (mouse.which != 3)
+    return false
+  if @data("linefrom")?
+    @data("linefrom").forEach (line) =>
+      line.elto.data("lineto").exclude(line) #Exclui a linha da lista de linhas ligadas do outro elemento
+      line.remove()
+  if @data("lineto")?
+    @data("lineto").forEach (line) =>
+      line.elfrom.data("linefrom").exclude(line) #Exclui a linha da lista de linhas ligadas do outro elemento
+      line.remove()
+  if @data("textref")?
+    @data("textref").remove()
+  objetos.exclude(@)
+  @remove()
