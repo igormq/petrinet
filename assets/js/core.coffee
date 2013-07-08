@@ -64,3 +64,7 @@ $ ->
     $('#codigo .modal-body').html("<p>#{nl2br objetos.toArp()}</p>")
     $("#codigo").modal
       show: true
+
+  $('#limpar-sketch').click () ->
+    objetos.forEach (e) ->
+      deleteEl e

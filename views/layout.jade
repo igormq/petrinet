@@ -13,7 +13,7 @@ html
     block content
     .btn-group.menu
         button.btn.lugar Lugar
-        button.btn.transicao Transicao
+        button.btn.transicao Transição
     .modal.editar-atributos
         .modal-body
             fieldset
@@ -21,7 +21,11 @@ html
                 label Número de Fichas
                 input.fichas(type='text', placeholder='Digite a qtd. de fichas')
                 button.btn.btn-primary(type='submit') Salvar
-    #gerar-codigo.btn.btn-success.btn-large Gerar .ARP
+    #grupo-de-acoes
+        p
+            #gerar-codigo.btn.btn-success.btn-large Gerar Código
+        p
+            #limpar-sketch.btn.btn-warning.btn-large Limpar
     .modal.fade.hide#codigo
         .modal-header
             button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
