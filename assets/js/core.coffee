@@ -75,5 +75,4 @@ $ ->
 
   $('#limpar-sketch').click () ->
     objetos.forEach (e) ->
-      deleteEl e
-      return true
+      deleteEl(e)

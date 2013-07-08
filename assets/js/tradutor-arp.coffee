@@ -9,7 +9,7 @@ Raphael.st.toArp = () ->
       estrutura += "{ \"#{obj.data('nome')}\": [["
       if obj.data('lineto')?
         obj.data('lineto').forEach (e) ->
-          estrutura += "\"#{e.data('elto').data('nome')}\", "
+          estrutura += "\"#{e.data('elfrom').data('nome')}\", "
       estrutura = "#{estrutura.replace /(,\s)$/g, ''}], ["
       if obj.data('linefrom')?
         obj.data('linefrom').forEach (e) ->
