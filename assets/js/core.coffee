@@ -1,6 +1,14 @@
 $ ->
 
-  window.paper = Raphael('canvas', CANVAS_ALTURA, CANVAS_LARGURA)
+  larguraWindow =  $(window).innerWidth()/2
+  alturaWindow = $(window).innerHeight()*3/4
+  window.paper = Raphael('canvas', larguraWindow, alturaWindow)
+  window.bg = window.paper.path("M 0 0 L #{larguraWindow} 0 L #{larguraWindow} #{alturaWindow} L 0 #{alturaWindow} Z") #Gera o quadrado do tamanho do fundo
+    .attr
+      "stroke-width": 5
+      stroke: "#4c4c4c"
+      fill: "#f0f0f0"
+  window.bg.node.style.pointerEvents = "none" #Para que se possa clicar sobre o fundo
 
   paper.ca.x = (num) ->
     if @type == 'circle'
@@ -31,8 +39,8 @@ $ ->
 
   window.objetos = paper.set()
 
-  $(window).resize () ->
-    paper.setSize($(window).width(),$(window).height())
+  # $(window).resize () ->
+  #   paper.setSize($(window).width(),$(window).height())
 
 
 

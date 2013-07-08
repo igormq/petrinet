@@ -23,3 +23,4 @@
 @oldy = 0
 @numT = 0
 @numP = 0
+@bg = null

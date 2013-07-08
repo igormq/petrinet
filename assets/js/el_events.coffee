@@ -67,6 +67,7 @@
       window.band.remove()
   window.band = paper.path("M 0 0").attr({"stroke-width": 5, "arrow-end": "block-narrow-short"})
   window.band.toBack() #Linha deve ficar atrás dos outros elementos
+  window.bg.toBack() #Mantém o plano de fundo atrás de tudo
   window.band.node.style.pointerEvents = "none"
   if not paper.canvas.onmousemove?
     paper.canvas.onmousemove = (e) ->
