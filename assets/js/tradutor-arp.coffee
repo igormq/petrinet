@@ -26,7 +26,7 @@ Raphael.st.toArp = () ->
   string = "REDE PETRINET ;\r\n\r\nNODOS\r\n\r\n"
   $.each json.nodos, () ->
     if @[0][0] == 'P'
-      string += "#{@[0]} :\tLUGAR#{if @length == 2 then "(#{@[1]})" else ''} ;\r\n"
+      string += "#{@[0]} :\tLUGAR#{if @length == 2 and @[1] != '0' then "(#{@[1]})" else ''} ;\r\n"
     else
       string += "#{@[0]} :\tTRANSICAO ;\r\n"
   string += "\r\nESTRUTURA\r\n\r\n"
