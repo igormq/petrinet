@@ -34,6 +34,12 @@
     @attr
       x: x,
       y: y
+
+    bbox = @getBBox()
+    newx = bbox.x + bbox.width / 2
+    newy = bbox.y + bbox.height / 2
+    if @data("textref")?
+      @data("textref").attr({x: newx , y: newy})
     return true
 
   intersection = null
