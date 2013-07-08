@@ -21,6 +21,16 @@ html
                 label Número de Fichas
                 input.fichas(type='text', placeholder='Digite a qtd. de fichas')
                 button.btn.btn-primary(type='submit') Salvar
+    .modal.editar-pesos
+        .modal-header
+            h3 Editar Pesos
+        .modal-body
+            fieldset.row-fluid
+                    #vem-de.span6
+                        legend Vem de
+                    #vai-para.span6
+                        legend Vai para
+            button.btn.btn-primary(type='submit') Salvar
     #grupo-de-acoes
         p
             #gerar-codigo.btn.btn-success.btn-large Gerar Código

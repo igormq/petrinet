@@ -1,15 +1,31 @@
+@transicaoDblclick = () ->
+  $('.editar-pesos').css 'top', "#{@attr('y') + @attr('height')/2}px"
+  $('.editar-pesos').css 'left', "#{@attr('x') + @attr('width')/2}px"
+  $('.editar-pesos').data 'element-id', "#{@id}"
+  mostrar = false
+  if @data('linefrom')?
+    mostrar = true
+    @data('linefrom').forEach (e) ->
+      $("#vai-para").append("<label>#{e.data('elto').data('nome')}:</label><input type=\"text\" class=\"input-mir\" data-element='#{e.data('elto').id}' data-type='vai' value='#{e.data('peso')}'/>")
+  if @data('lineto')?
+    mostrar = true
+    @data('lineto').forEach (e) ->
+      $("#vem-de").append("<label>#{e.data('elfrom').data('nome')}:</label><input type=\"text\" class=\"input-mir\" data-element='#{e.data('elfrom').id}' data-type='vai' value='#{e.data('peso')}'/>")
+  if mostrar
+    $(".editar-pesos").show()
 
 @dblclick = () ->
-    $('.editar-atributos').show()
-    $(".editar-atributos input[type='text'].fichas").val(@data('fichas'))
-    $('.editar-atributos').css 'top', "#{@attr('cy')}px"
-    $('.editar-atributos').css 'left', "#{@attr('cx')}px"
-    $('.editar-atributos').data 'element-id', "#{@id}"
+  $('.editar-atributos').show()
+  $(".editar-atributos input[type='text'].fichas").val(@data('fichas'))
+  $('.editar-atributos').css 'top', "#{@attr('cy')}px"
+  $('.editar-atributos').css 'left', "#{@attr('cx')}px"
+  $('.editar-atributos').data 'element-id', "#{@id}"
 
 
 @click = () ->
   $('.menu').hide()
   $('.editar-atributos').hide()
+  $('.editar-pesos').hide()
   if @ox != @attr("x") and @oy != @attr("y")
     return false
   dimensions = @getBBox()
@@ -39,6 +55,7 @@
         window.band.data('elfrom', paper.getById(window.oldid))
         #Para onde a linha vai
         window.band.data('elto', @)
+        window.band.data('peso', 1) #Peso padrão da linha
         oldtemp = paper.getById(window.oldid)
         #Verifica se já existe um set
         #Se ele existir, adiciona a linha ao set existente

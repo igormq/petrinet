@@ -7,6 +7,7 @@ Raphael.fn.transicao = (x, y) ->
     .drag(move, start, end)
     .click(click)
     .mousedown(removeEl)
+    .dblclick(transicaoDblclick)
     .data("nome", "T#{numT}")
   console.log("nome is #{temp.data("nome")}")
   numT++

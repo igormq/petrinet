@@ -5,9 +5,9 @@ $ ->
   window.paper = Raphael('canvas', larguraWindow, alturaWindow)
   window.bg = window.paper.path("M 0 0 L #{larguraWindow} 0 L #{larguraWindow} #{alturaWindow} L 0 #{alturaWindow} Z") #Gera o quadrado do tamanho do fundo
     .attr
-      "stroke-width": 5
-      stroke: "#4c4c4c"
-      fill: "#f0f0f0"
+      "stroke-width": 2
+      stroke: "#d8d8d8"
+      fill: "#fafafa"
   window.bg.node.style.pointerEvents = "none" #Para que se possa clicar sobre o fundo
 
   paper.ca.x = (num) ->
@@ -22,9 +22,13 @@ $ ->
   paper.canvas.onclick = (e) ->
     if $('.editar-atributos').is ':visible'
       $('.editar-atributos').hide()
+    if $('.editar-pesos').is ':visible'
+      $('.editar-pesos').hide()
     else if not paper.canvas.onmousemove?
       if $('.editar-atributos').is ':visible'
         $('.editar-atributos').hide()
+      else if $('.editar-pesos').is ':visible'
+        $('.editar-pesos').hide()
       else
         element = paper.getElementByPoint(e.clientX, e.clientY)
         if  element == null
