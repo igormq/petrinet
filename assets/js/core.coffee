@@ -54,3 +54,13 @@ $ ->
     element.data('fichas', parseInt($('.editar-atributos .fichas').val()))
     element.data("textref").attr({text: element.data("fichas")})
     $('.editar-atributos').hide()
+
+  nl2br = (str, is_xhtml) ->
+    breakTag = if (is_xhtml || typeof is_xhtml is 'undefined') then '<br />' else '<br>'
+    "#{str}".replace /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2'
+
+  $('#gerar-codigo').click () ->
+    resultado = objetos.toArp().replace /\\r\\n/g, "<br />"
+    $('#codigo .modal-body').html("<p>#{nl2br objetos.toArp()}</p>")
+    $("#codigo").modal
+      show: true

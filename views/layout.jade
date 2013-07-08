@@ -21,3 +21,11 @@ html
                 label Número de Fichas
                 input.fichas(type='text', placeholder='Digite a qtd. de fichas')
                 button.btn.btn-primary(type='submit') Salvar
+    #gerar-codigo.btn.btn-success.btn-large Gerar .ARP
+    .modal.fade.hide#codigo
+        .modal-header
+            button.close(type="button", data-dismiss="modal", aria-hidden="true") &times;
+            h3 Código gerado
+        .modal-body
+        .modal-footer
+            button.btn(data-dismiss="modal", aria-hidden="true") Fechar
