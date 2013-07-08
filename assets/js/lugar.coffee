@@ -1,5 +1,5 @@
 Raphael.fn.lugar = (cx, cy) ->
-	@circle(cx, cy, RAIO)
+	tempc = @circle(cx, cy, RAIO)
     .attr
       x: cx - RAIO,
       y: cy - RAIO,
@@ -10,3 +10,9 @@ Raphael.fn.lugar = (cx, cy) ->
     .click(click)
     .dblclick(dblclick)
     .data 'fichas', 0
+  temp = @text(cx,cy,"0")
+  temp.node.style.pointerEvents = "none"
+  tempc.data("textref", temp)
+  console.log("temp id is #{temp.id}")
+  console.log("tempc id is #{tempc.id}")
+  tempc
