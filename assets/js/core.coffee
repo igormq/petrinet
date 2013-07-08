@@ -61,11 +61,22 @@ $ ->
     else if $(@).hasClass('transicao')
       objetos.push(paper.transicao(+$(@).parent().data('x'), +$(@).parent().data('y')))
     $(@).parent().hide()
+
   $('.editar-atributos button[type="submit"]').click () ->
     element = paper.getById $('.editar-atributos').data('element-id')
     element.data('fichas', parseInt($('.editar-atributos .fichas').val()))
     element.data("textref").attr({text: element.data("fichas")})
     $('.editar-atributos').hide()
+
+  $('.editar-pesos button[type="submit"]').click () ->
+    element = paper.getById($('.editar-pesos').data('element-id'))
+    if element.data('linefrom')?
+      element.data('linefrom').forEach (e) ->
+        e.data('peso', parseInt($(".editar-pesos input[data-element='#{e.data('elto').id}'][data-type='linefrom']").val()))
+    if element.data('lineto')?
+      element.data('lineto').forEach (e) ->
+        e.data('peso', parseInt($(".editar-pesos input[data-element='#{e.data('elfrom').id}'][data-type='lineto']").val()))
+    $('.editar-pesos').hide()
 
   nl2br = (str, is_xhtml) ->
     breakTag = if (is_xhtml || typeof is_xhtml is 'undefined') then '<br />' else '<br>'

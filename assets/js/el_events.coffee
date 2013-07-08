@@ -1,16 +1,17 @@
 @transicaoDblclick = () ->
   $('.editar-pesos').css 'top', "#{@attr('y') + @attr('height')/2}px"
   $('.editar-pesos').css 'left', "#{@attr('x') + @attr('width')/2}px"
-  $('.editar-pesos').data 'element-id', "#{@id}"
+  $('.editar-pesos').data('element-id', "#{@id}")
+  $('.editar-pesos .content').html('')
   mostrar = false
   if @data('linefrom')?
     mostrar = true
     @data('linefrom').forEach (e) ->
-      $("#vai-para").append("<label>#{e.data('elto').data('nome')}:</label><input type=\"text\" class=\"input-mir\" data-element='#{e.data('elto').id}' data-type='vai' value='#{e.data('peso')}'/>")
+      $("#vai-para .content").append("<label>#{e.data('elto').data('nome')}:</label><input type=\"text\" class=\"input-mir\" data-element='#{e.data('elto').id}' data-type='linefrom' value='#{e.data('peso')}'/>")
   if @data('lineto')?
     mostrar = true
     @data('lineto').forEach (e) ->
-      $("#vem-de").append("<label>#{e.data('elfrom').data('nome')}:</label><input type=\"text\" class=\"input-mir\" data-element='#{e.data('elfrom').id}' data-type='vai' value='#{e.data('peso')}'/>")
+      $("#vem-de .content").append("<label>#{e.data('elfrom').data('nome')}:</label><input type=\"text\" class=\"input-mir\" data-element='#{e.data('elfrom').id}' data-type='lineto' value='#{e.data('peso')}'/>")
   if mostrar
     $(".editar-pesos").show()
 
