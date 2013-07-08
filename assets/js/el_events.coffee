@@ -12,8 +12,6 @@
   $('.editar-atributos').hide()
   if @ox != @attr("x") and @oy != @attr("y")
     return false
-  oldx = x
-  oldy = y
   dimensions = @getBBox()
   x = dimensions.x + dimensions.width/2
   y = dimensions.y + dimensions.height/2
@@ -31,11 +29,12 @@
         console.log(@type)
         console.log(paper.getById(window.oldid).type)
         console.log(@type != paper.getById(window.oldid).type)
-        ang = 360 - Raphael.angle(x,y,oldx,oldy) #Acerta o ângulo para começar em 0 a partir do eixo X
+        ang = 360 - Raphael.angle(x,y,window.oldx,window.oldy) #Acerta o ângulo para começar em 0 a partir do eixo X
         ang = ang * Math.PI / 180 #Conversão para radianos
         finalX = x - dimensions.width*Math.cos(ang)/2
         finalY = y + dimensions.height*Math.sin(ang)/2
-        window.band.attr({path: "M #{oldx} #{oldy}L #{finalX} #{finalY}"})
+        window.band.attr({path: "M #{window.oldx} #{window.oldy}L #{finalX} #{finalY}"})
+        console.log("M #{window.oldx} #{window.oldy}L #{finalX} #{finalY}")
         #De onde a linha vem
         window.band.data('elfrom', paper.getById(window.oldid))
         #Para onde a linha vai
@@ -77,3 +76,5 @@
     paper.canvas.onmousemove = null
     paper.getById(window.oldid).drag(move, start, end)
   window.oldid = @id
+  window.oldx = x
+  window.oldy = y
