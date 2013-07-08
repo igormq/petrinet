@@ -6,3 +6,4 @@ Raphael.fn.transicao = (x, y) ->
        cursor: "move"
     .drag(move, start, end)
     .click(click)
+    .mousedown(removeEl)

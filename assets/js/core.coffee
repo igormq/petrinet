@@ -52,4 +52,5 @@ $ ->
   $('.editar-atributos button[type="submit"]').click () ->
     element = paper.getById $('.editar-atributos').data('element-id')
     element.data('fichas', $('.editar-atributos .fichas').val())
+    element.data("textref").attr({text: element.data("fichas")})
     $('.editar-atributos').hide()

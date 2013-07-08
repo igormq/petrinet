@@ -14,7 +14,4 @@ Raphael.fn.lugar = (cx, cy) ->
   temp = @text(cx,cy,"0")
   temp.node.style.pointerEvents = "none"
   tempc.data("textref", temp)
-  console.log("circulo criado")
-  console.log("temp id is #{temp.id}")
-  console.log("tempc id is #{tempc.id}")
   tempc
