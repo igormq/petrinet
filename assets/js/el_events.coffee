@@ -93,5 +93,7 @@
         line.remove()
     if @data("textref")?
       @data("textref").remove()
+    if @data("nomeref")?
+      @data("nomeref").remove()
     objetos.exclude(@)
     @remove()
