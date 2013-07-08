@@ -8,8 +8,8 @@
 @RAIO = 20
 @LARGURA = 50
 @ALTURA = LARGURA/3
-@CANVAS_LARGURA = 640
-@CANVAS_ALTURA = 480
+@CANVAS_LARGURA = $(window).innerWidth()
+@CANVAS_ALTURA = $(window).innerWidth() * 3/4
 
 @paper = null
 @objetos = null
