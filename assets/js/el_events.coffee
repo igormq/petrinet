@@ -96,5 +96,7 @@
       line.remove()
   if obj.data("textref")?
     obj.data("textref").remove()
+  if obj.data("nomeref")?
+    obj.data("nomeref").remove()
   objetos.exclude(obj)
   obj.remove()
