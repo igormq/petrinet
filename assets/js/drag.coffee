@@ -8,15 +8,26 @@
   not (a.left >= b.right or a.right <= b.left or a.top >= b.bottom or a.bottom <= b.top)
 
 @start = () ->
-    @ox = @attr("x")
-    @oy = @attr("y")
+  @ox = @attr("x")
+  @oy = @attr("y")
+  @attr
+    cursor: "move"
+  if @type == "circle"
     @attr
-      cursor: "move",
-      opacity: .5
+      fill: "#2981b0"
+  else
+    @attr
+      fill: "#999"
+  
 @end = () ->
   @attr
     cursor: "pointer",
-    opacity: 1.0
+  if @type == "circle"
+    @attr
+      fill: "#12394d"
+  else
+    @attr
+      fill: "#000"
 
 @move = (dx, dy) ->
   bbox = @getBBox()
@@ -99,6 +110,8 @@
       finalX = samex - bbox2.width*Math.cos(ang)/2
       finalY = samey + bbox2.height*Math.sin(ang)/2
       e.attr({path: "M #{newx} #{newy} L #{finalX} #{finalY}"})
+      tempPoint = e.getPointAtLength(e.getTotalLength()/2) #Pega o ponto médio
+      e.data("texto").attr({x: tempPoint.x, y: tempPoint.y}) #Acerta a posição do texto da linha
   if @data("lineto")?
     @data("lineto").forEach (e) =>
       #Pega a posição do elemento que não se moveu
@@ -110,6 +123,8 @@
       finalX = newx - bbox.width*Math.cos(ang)/2
       finalY = newy + bbox.height*Math.sin(ang)/2
       e.attr({path: "M #{samex} #{samey} L #{finalX} #{finalY}"})
+      tempPoint = e.getPointAtLength(e.getTotalLength()/2) #Pega o ponto médio
+      e.data("texto").attr({x: tempPoint.x, y: tempPoint.y}) #Acerta a posição do texto da linha
   if @data("textref")?
     @data("textref").attr({x: newx, y: newy}) #Acerta a posição do texto referente à quantia de fichas
   if @data("nomeref")?

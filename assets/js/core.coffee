@@ -73,9 +73,11 @@ $ ->
     if element.data('linefrom')?
       element.data('linefrom').forEach (e) ->
         e.data('peso', parseInt($(".editar-pesos input[data-element='#{e.data('elto').id}'][data-type='linefrom']").val()))
+        e.data("texto").attr({text: e.data("peso")}) # Atualiza o texto
     if element.data('lineto')?
       element.data('lineto').forEach (e) ->
         e.data('peso', parseInt($(".editar-pesos input[data-element='#{e.data('elfrom').id}'][data-type='lineto']").val()))
+        e.data("texto").attr({text: e.data("peso")}) # Atualiza o texto
     $('.editar-pesos').hide()
 
   nl2br = (str, is_xhtml) ->
@@ -96,6 +98,6 @@ $ ->
       temp = temp2.next
       temp2.remove()
     temp.remove()
-    window.numP = 0
-    window.numT = 0
+    window.numP = 1
+    window.numT = 1
     objetos.clear()

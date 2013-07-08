@@ -57,6 +57,14 @@
         #Para onde a linha vai
         window.band.data('elto', @)
         window.band.data('peso', 1) #Peso padrão da linha
+        tempPoint = window.band.getPointAtLength(window.band.getTotalLength()/2)
+        tempPeso = window.paper.text(tempPoint.x, tempPoint.y, 1) #Gera o texto do peso da linha
+          .attr
+            fill: "#cecece"
+            stroke: "#ccc"
+            "font-size": 16
+        tempPeso.node.style.pointerEvents = "none" #O texto não deve afetar a interação
+        window.band.data("texto", tempPeso)
         oldtemp = paper.getById(window.oldid)
         #Verifica se já existe um set
         #Se ele existir, adiciona a linha ao set existente
