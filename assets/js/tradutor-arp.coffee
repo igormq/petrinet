@@ -9,11 +9,11 @@ Raphael.st.toArp = () ->
       estrutura += "{ \"#{obj.data('nome')}\": [["
       if obj.data('lineto')?
         obj.data('lineto').forEach (e) ->
-          estrutura += "\"#{e.data('elfrom').data('nome')}\", "
+          estrutura += "\"#{if e.data('peso') == 1 then '' else "#{e.data('peso')}*"}#{e.data('elfrom').data('nome')}\", "
       estrutura = "#{estrutura.replace /(,\s)$/g, ''}], ["
       if obj.data('linefrom')?
         obj.data('linefrom').forEach (e) ->
-          estrutura += "\"#{e.data('elto').data('nome')}\", "
+          estrutura += "\"#{if e.data('peso') == 1 then '' else "#{e.data('peso')}*"}#{e.data('elto').data('nome')}\", "
       estrutura = "#{estrutura.replace /(,\s)$/g, ''}]]}, "
   estrutura = "#{estrutura.replace /(,\s)$/g, ''}]"
 
