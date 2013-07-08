@@ -74,6 +74,13 @@ $ ->
       show: true
 
   $('#limpar-sketch').click () ->
-    objetos.forEach (e) ->
-      deleteEl e
-      return true
+    temp = bg.next
+    console.log("temp id is #{temp.id}")
+    while temp.next?
+      temp2 = temp
+      temp = temp2.next
+      temp2.remove()
+    temp.remove()
+    window.numP = 0
+    window.numT = 0
+    objetos.clear()
