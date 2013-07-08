@@ -12,6 +12,9 @@ Raphael.fn.lugar = (cx, cy) ->
     .mousedown(removeEl)
     .data 'fichas', 0
   temp = @text(cx,cy,"0")
+    .attr
+      fill: "#fff"
+      "font-size": 16
   temp.node.style.pointerEvents = "none"
   tempc.data("textref", temp)
   tempc
