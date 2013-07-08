@@ -39,7 +39,9 @@
     newx = bbox.x + bbox.width / 2
     newy = bbox.y + bbox.height / 2
     if @data("textref")?
-      @data("textref").attr({x: newx , y: newy})
+      @data("textref").attr({x: newx , y: newy}) #Acerta a posição do texto referente à quantia de fichas
+    if @data("nomeref")?
+      @data("nomeref").attr({x:newx, y: newy-bbox.height/2-8}) #Acerta a posição do nome
     return true
 
   intersection = null
@@ -109,4 +111,6 @@
       finalY = newy + bbox.height*Math.sin(ang)/2
       e.attr({path: "M #{samex} #{samey} L #{finalX} #{finalY}"})
   if @data("textref")?
-    @data("textref").attr({x: newx, y: newy})
+    @data("textref").attr({x: newx, y: newy}) #Acerta a posição do texto referente à quantia de fichas
+  if @data("nomeref")?
+    @data("nomeref").attr({x:newx, y: newy-bbox.height/2-8}) #Acerta a posição do nome

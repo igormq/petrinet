@@ -21,3 +21,5 @@
 @oldid = 0
 @oldx = 0
 @oldy = 0
+@numT = 0
+@numP = 0
