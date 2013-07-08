@@ -60,9 +60,10 @@
         tempPoint = window.band.getPointAtLength(window.band.getTotalLength()/2)
         tempPeso = window.paper.text(tempPoint.x, tempPoint.y, 1) #Gera o texto do peso da linha
           .attr
-            fill: "#cecece"
-            stroke: "#ccc"
-            "font-size": 16
+            fill: "#666",
+            stroke: "#ccc",
+            "stroke-width": 2,
+            "font-size": 20
         tempPeso.node.style.pointerEvents = "none" #O texto não deve afetar a interação
         window.band.data("texto", tempPeso)
         oldtemp = paper.getById(window.oldid)
