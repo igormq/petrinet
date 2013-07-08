@@ -3,12 +3,12 @@ html
   head
     title= title
     link(rel='stylesheet', href='lib/stylesheets/bootstrap.css')
-    link(rel='stylesheet', href='/stylesheets/style.css')
     script(src='lib/javascripts/jquery-1.10.1.js')
     script(src='lib/javascripts/bootstrap.js')
     script(src='lib/javascripts/raphael-min.js')
     script(src='lib/javascripts/underscore.min.js')
-    script(src='javascripts/core.js')
+    != js('application')
+    != css('style')
   body
     block content
     .btn-group.menu

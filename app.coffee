@@ -20,15 +20,8 @@ app.use express.methodOverride()
 app.use express.cookieParser("your secret here")
 app.use express.session()
 app.use app.router
-app.use require("stylus").middleware(
-  src: __dirname + "/assets"
-  dest: __dirname + "/public"
-)
-app.use require('connect-coffee-script')(
-  src: __dirname + "/assets"
-  dest: __dirname + "/public"
-  bare: true
-)
+
+app.use require('connect-assets')()
 
 app.use express.static(path.join(__dirname, "public"))
 
