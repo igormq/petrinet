@@ -102,3 +102,5 @@
       finalX = newx - bbox.width*Math.cos(ang)/2
       finalY = newy + bbox.height*Math.sin(ang)/2
       e.attr({path: "M #{samex} #{samey} L #{finalX} #{finalY}"})
+  if @data("textref")?
+    @data("textref").attr({x: newx, y: newy})
